@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netstandard2.0;net45;net46;net47;net472</TargetFrameworks>
+    <RootNamespace>XCommas.Net</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/TheKimono/3Commas.Net.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>3commas, cryptocurrency, trading, automation, bitcoin, ethereum, bot</PackageTags>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/TheKimono/3Commas.Net/master/LICENSE</PackageLicenseUrl>
+    <Authors>TheKimonoOfBithumb</Authors>
+    <Description>A feature complete and easy to use .Net wrapper of the official 3Commas API.</Description>
+    <PackageProjectUrl>https://github.com/TheKimono/3Commas.Net</PackageProjectUrl>
+    <PackageIconUrl>https://3commas.io/assets/favicon-e94c7cbd5562d5433a6b7a0d37385cd08d79ade4a2fa815bfb110eea019fce37.ico</PackageIconUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewtonSoft.Json" Version="12.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net46' or '$(TargetFramework)' == 'net47' or '$(TargetFramework)' == 'net472'">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+</Project>
