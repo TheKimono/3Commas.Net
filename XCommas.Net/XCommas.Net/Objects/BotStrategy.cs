@@ -46,10 +46,10 @@ namespace XCommas.Net.Objects
         }
     }
 
-    public class TaPresetBotStrategy : BotStrategy
+    public class TaPresetsBotStrategy : BotStrategy
     {
         public const string Id = "ta_preset";
-        public TaPresetBotStrategy() : base(Id)
+        public TaPresetsBotStrategy() : base(Id)
         {
 
         }

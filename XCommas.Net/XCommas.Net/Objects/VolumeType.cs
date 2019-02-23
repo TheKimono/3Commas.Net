@@ -7,7 +7,7 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "quote_currency")]
         QuoteCurrency,
         [EnumMember(Value = "base_currency")]
-        baseCurrency,
+        BaseCurrency,
         [EnumMember(Value = "percent")]
         Percent,
         [EnumMember(Value = "xbt")]
