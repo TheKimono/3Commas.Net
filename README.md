@@ -35,6 +35,16 @@ You are encouraged to check the `IsSuccess` property before accessing the `Data`
 ## Account
 This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md).
 
+### GetAccounts
+```csharp
+var response = await client.GetAccountsAsync();
+
+foreach(var account in response.Data)
+{
+    //Do something with account
+}
+```
+
 ## Smart Trades
 This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md).
 
@@ -46,8 +56,10 @@ This section covers the methods described in the official documentation [here](h
 
 
 # :penguin: TIP: 
- If you want to support the future development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
+ If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
 
  BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
+
  ETH: 0x92526204d90c337786214179699D877e0888bE31
+ 
  LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
