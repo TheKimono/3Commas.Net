@@ -35,7 +35,7 @@ You are encouraged to check the `IsSuccess` property before accessing the `Data`
 ## Account
 This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md).
 
-### GetAccounts
+### `GetAccounts`
 ```csharp
 var response = await client.GetAccountsAsync();
 
