@@ -239,29 +239,6 @@ var response = await client.CreateSmartTradeAsync(data);
 
 ### `GetSmartTrades` 
 ```csharp
-var data = new SmartTradeCreateParameters
-{
-    AccountId = accountId,
-    Pair = "BTC_ETH",
-    Note = "Buy the dip and sell the moon",
-    StopLossEnabled = false,
-    TakeProfitEnabled = true,
-    TakeProfitType = SmartTradeCompletionType.Classic,
-    TakeProfitPriceCondition = 0.5m,
-    TakeProfitPriceMethod = PriceMethod.Bid,
-    UnitsToBuy = 5,        
-    TrailingBuyEnabled = true,
-    TrailingBuyStep = 1.0m,
-    BuyPrice = 0.01m,
-    TrailingTakeProfit = true,
-    TrailingTakeProfitStep = 5.0m
-};
-
-var response = await client.CreateSmartTradeAsync(data);
-```
-
-### `GetSmartTrades` 
-```csharp
 var response = await client.GetSmartTradesAsync();
 
 foreach(var smartTrade in response.Data)
