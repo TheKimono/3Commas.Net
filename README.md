@@ -22,8 +22,11 @@ var secret = "YOUR_SECRET";
 var client = new XCommas.Net.XCommasApi(apiKey, secret);
 ```
 
-> [!TIP]
+> :penguin: TIP
 > If you want to support the future development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
+>
 > BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
+>
 > ETH: 0x92526204d90c337786214179699D877e0888bE31
+>
 > LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
