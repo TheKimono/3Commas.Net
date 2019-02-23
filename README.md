@@ -3,7 +3,7 @@ A feature complete and easy to use .Net wrapper of the official 3Commas API.
 
 Don't forget to visit the [official API docs](https://github.com/3commas-io/3commas-official-api-docs/) or [3Commas support](https://support.3commas.io/hc/en-us) for further reference.
 
-> :penguin: This API wrapper is not an official release from 3Commas team.
+> :penguin: This API wrapper is not an official release from 3Commas team. It **is** however made with love, by a penguin!
 
 ## Getting started
 XCommas.Net is available as a nuget package for .Net Core, .Net Standard, and various .Net Framework versions.
@@ -497,7 +497,7 @@ var response = await client.ShowDealAsync(dealId, 60);
 var deal = response.Data;
 ```
 
-# :penguin: TIP: 
+# :penguin: Support the penguin: 
  If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
 
  BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
