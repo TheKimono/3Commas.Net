@@ -392,8 +392,8 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<Deal> PanicSellSmartTradeStep(int smartTradeId, int stepId) => this.PanicSellSmartTradeAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<Deal>> PanicSellSmartTradeAsync(int smartTradeId, int stepId)
+        public XCommasResponse<Deal> PanicSellSmartTradeStep(int smartTradeId, int stepId) => this.PanicSellSmartTradeStepAsync(smartTradeId, stepId).Result;
+        public async Task<XCommasResponse<Deal>> PanicSellSmartTradeStepAsync(int smartTradeId, int stepId)
         {
             var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/step_panic_sell";
             using (var request = XCommasRequest.Post(path).WithSerializedContent(new PanicSellSmartTradeStepData { StepId = stepId }).Sign(this))
