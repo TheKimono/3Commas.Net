@@ -42,6 +42,7 @@ var response = await client.GetAccountsAsync();
 foreach(var account in response.Data)
 {
     //Do something with account
+    accountId = account.Id;
 }
 ```
 
@@ -87,6 +88,42 @@ var response = await client.GetCurrencyRateAsync("MCO_BTC");
 var mcoAsk = response.Data.Ask;
 ```
 
+### `SellAllToUsd` 
+```csharp
+var response = await client.SellAllToUsdAsync(accountId);
+```
+
+### `SellAllToBtc` 
+```csharp
+var response = await client.SellAllToBtcAsync(accountId);
+```
+
+### `LoadBalances` 
+```csharp
+var response = await client.LoadBalancesAsync(accountId);
+
+var totalBtcProfit = response.Data.TotalBtcProfit;
+```
+
+### `RenameAccount` 
+```csharp
+var response = await client.RenameAccountAsync(accountId, "My new shiny account name");
+```
+
+### `GetPieChartData` 
+```csharp
+var response = await client.GetPieChartDataAsync(accountId);
+```
+
+### `GetAccountTableData` 
+```csharp
+var response = await client.GetAccountTableDataAsync(accountId);
+```
+
+### `RemoveAccount` 
+```csharp
+var response = await client.RemoveAccountAsync(accountId);
+```
 
 ## Smart Trades
 This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md).
