@@ -8,12 +8,17 @@ Don't forget to visit the [official API docs](https://github.com/3commas-io/3com
 ## Getting started
 XCommas.Net is available as a nuget package for .Net Core, .Net Standard, and various .Net Framework versions.
 
-You can install it as a `nuget` package from the package manager console:
+Install XCommas.net as a `nuget` package from the package manager console:
 
 ```Console
 PM> Install-Package XCommas.Net
 ```
 
+You can also clone this repository and add the `XCommas.Net` project directly to your solution.
+
+### Instantiating the client
+
+All you need to instantiate the all-powerful client is to new up an instance of `XCommasApi`. You need to [generate an API key and secret](https://3commas.io/api_access_tokens) before you can use the API. 
 
 ```csharp
 var apiKey = "YOUR_API_KEY";
@@ -22,11 +27,27 @@ var secret = "YOUR_SECRET";
 var client = new XCommas.Net.XCommasApi(apiKey, secret);
 ```
 
-> :penguin: TIP
-> If you want to support the future development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
->
-> BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
->
-> ETH: 0x92526204d90c337786214179699D877e0888bE31
->
-> LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
+# Methods
+The entire API is supported, and each method exists in a synchronous and asynchronous version for your integration pleasure. Most methods return an instance of [`XCommasResponse<T>`](https://github.com/TheKimono/3Commas.Net/blob/master/XCommas.Net/XCommas.Net/XCommasResponse.cs) where `T` is a strongly typed representation of the data returned from 3commas, which can be either a single object or a collection of objects.
+
+You are encouraged to check the `IsSuccess` property before accessing the `Data` property. If an error has occured, the `Error` property will contain the error message. For troubleshooting purposes, the original json reponse from 3commas is included in the `RawData` string property. 
+
+## Account
+This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md).
+
+## Smart Trades
+This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md).
+
+## Bots
+This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/bots_api.md).
+
+## Deals
+This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/deals_api.md).
+
+
+# :penguin: TIP: 
+ If you want to support the future development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
+
+ BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
+ ETH: 0x92526204d90c337786214179699D877e0888bE31
+ LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
