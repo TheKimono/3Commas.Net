@@ -475,7 +475,7 @@ var deal = response.Data;
 ```
 
 # :penguin: Support the penguin: 
- If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of the below cryptocurrency addresses:
+ If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of these cryptocurrency addresses:
 
  BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
 
