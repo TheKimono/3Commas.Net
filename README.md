@@ -3,8 +3,7 @@ A feature complete and easy to use .Net wrapper of the official 3Commas API.
 
 Don't forget to visit the [official API docs](https://github.com/3commas-io/3commas-official-api-docs/) or [3Commas support](https://support.3commas.io/hc/en-us) for further reference.
 
-> [!NOTE]
-> This API wrapper is not an official release from 3Commas team.
+> :penguin: This API wrapper is not an official release from 3Commas team.
 
 ## Getting started
 XCommas.Net is available as a nuget package for .Net Core, .Net Standard, and various .Net Framework versions.
@@ -12,7 +11,7 @@ XCommas.Net is available as a nuget package for .Net Core, .Net Standard, and va
 You can install it as a `nuget` package from the package manager console:
 
 ```Console
-
+PM> Install-Package XCommas.Net
 ```
 
 
