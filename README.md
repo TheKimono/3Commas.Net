@@ -45,6 +45,49 @@ foreach(var account in response.Data)
 }
 ```
 
+### `GetMarkets` 
+```csharp
+var response = await client.GetMarketsAsync();
+
+foreach(var market in response.Data)
+{
+    //Do something with market
+    Console.WriteLine(market.Name);
+}
+```
+
+### `CreateAccount` 
+```csharp
+var account = new AccountCreateData
+{
+    Name = "My Binance",
+    MarketName = "Binance", //Get from markets list
+    ApiKey = "MyBinanceApiKey",
+};
+
+var response = await client.CreateAccountAsync(account);
+```
+
+### `CreateAccount` 
+```csharp
+var account = new AccountCreateData
+{
+    Name = "My Binance",
+    MarketName = "Binance", //Get from markets list
+    ApiKey = "MyBinanceApiKey",
+};
+
+var response = await client.CreateAccountAsync(account);
+```
+
+### `GetCurrencyRate` 
+```csharp
+var response = await client.GetCurrencyRateAsync("MCO_BTC");
+
+var mcoAsk = response.Data.Ask;
+```
+
+
 ## Smart Trades
 This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md).
 
