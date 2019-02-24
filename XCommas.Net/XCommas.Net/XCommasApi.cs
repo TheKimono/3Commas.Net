@@ -13,7 +13,7 @@ namespace XCommas.Net
 {
     public class XCommasApi : ICredentialsBearer
     {
-        private const string BaseAddress = "https://3commas.io/public/api";
+        private const string BaseAddress = "https://api.3commas.io/public/api";
         private readonly JsonSerializer DefaultSerializer = JsonSerializer.Create(new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
