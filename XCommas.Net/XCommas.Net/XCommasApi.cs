@@ -230,7 +230,7 @@ namespace XCommas.Net
         public XCommasResponse<Bot[]> GetBots(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope botScope = BotScope.Enabled, Strategy strategy = Strategy.Long) => this.GetBotsAsync(limit, offset, accountId, botId, botScope, strategy).Result;
         public async Task<XCommasResponse<Bot[]>> GetBotsAsync(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope botScope = BotScope.Enabled, Strategy strategy = Strategy.Long)
         {
-            var path = $"{BaseAddress}/ver1/deals?limit={limit}&offset={offset}&account_id={accountId}&bot_id={botId}&scope={botScope.GetEnumMemberAttrValue()}&strategy={strategy.GetEnumMemberAttrValue()}";
+            var path = $"{BaseAddress}/ver1/bots?limit={limit}&offset={offset}&account_id={accountId}&bot_id={botId}&scope={botScope.GetEnumMemberAttrValue()}&strategy={strategy.GetEnumMemberAttrValue()}";
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<Bot[]>(request).ConfigureAwait(false);

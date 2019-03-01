@@ -13,6 +13,8 @@ namespace XCommas.Net.Converters
         {
             if (name == "total") return "total_bought_volume";
             if (name == "base") return "base_order_volume";
+            if (name == "total_bought_volume") return "total";
+            if (name == "base_order_volume") return "base";
 
             return string.Empty;
         }

@@ -25,6 +25,14 @@ namespace XCommas.Net.Objects
         }
     }
 
+    public class UnknownStrategy : BotStrategy
+    {
+        public UnknownStrategy(string name) : base(name)
+        {
+
+        }
+    }
+
     public class QflBotStrategy : BotStrategy
     {
         public const string Id = "qfl";
@@ -41,6 +49,25 @@ namespace XCommas.Net.Objects
     {
         public const string Id = "cqs_telegram";
         public CqsTelegramBotStrategy() : base(Id)
+        {
+
+        }
+    }
+
+    public class CqsPremiumBotStrategy : BotStrategy
+    {
+        public const string Id = "cqs_premium";
+        public CqsPremiumBotStrategy() : base(Id)
+        {
+
+        }
+    }
+
+    public class ManualStrategy : BotStrategy
+    {
+        public const string Id = "manual";
+
+        public ManualStrategy() : base(Id)
         {
 
         }

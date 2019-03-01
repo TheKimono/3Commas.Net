@@ -20,6 +20,8 @@ namespace XCommas.Net.Converters
             this.strategyMapping.Add(TradingViewBotStrategy.Id, typeof(TradingViewBotStrategy));
             this.strategyMapping.Add(RsiBotStrategy.Id, typeof(RsiBotStrategy));
             this.strategyMapping.Add(UltBotStrategy.Id, typeof(UltBotStrategy));
+            this.strategyMapping.Add(CqsPremiumBotStrategy.Id, typeof(CqsPremiumBotStrategy));
+            this.strategyMapping.Add(ManualStrategy.Id, typeof(ManualStrategy));
         }
 
         public override bool CanConvert(Type objectType)
@@ -39,7 +41,11 @@ namespace XCommas.Net.Converters
                     foreach (var tkn in arr)
                     {
                         var strategyType = tkn["strategy"]?.Value<string>();
-                        if (string.IsNullOrEmpty(strategyType) || !this.strategyMapping.ContainsKey(strategyType)) throw new Exception($"Unexpected json value '{strategyType}' found in strategy list.");
+                        if (string.IsNullOrEmpty(strategyType) || !this.strategyMapping.ContainsKey(strategyType))
+                        {
+                            result.Add(new UnknownStrategy(strategyType));
+                            continue;
+                        }
 
                         var type = this.strategyMapping[strategyType];
                         var strategy = Activator.CreateInstance(type);

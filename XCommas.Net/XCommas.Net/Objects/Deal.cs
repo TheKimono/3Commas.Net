@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using XCommas.Net.Converters;
 
 namespace XCommas.Net.Objects
 {
@@ -66,7 +67,7 @@ namespace XCommas.Net.Objects
         public decimal SoldVolume { get; set; }
         [JsonProperty("sold_average_price")]
         public decimal? SoldAveragePrice { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter), typeof(TakeProfitTypeNamingStrategy))]
         [JsonProperty("take_profit_type")]
         public TakeProfitType TakeProfitType { get; set; }
         [JsonProperty("final_profit")]
