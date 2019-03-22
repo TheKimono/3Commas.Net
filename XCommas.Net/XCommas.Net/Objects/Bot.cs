@@ -43,7 +43,7 @@ namespace XCommas.Net.Objects
 
     public class BotUpdateData : BotData
     {
-        public BotUpdateData(BotData data)
+        public BotUpdateData(Bot data)
         {
             this.ActiveSafetyOrdersCount = data.ActiveSafetyOrdersCount;
             this.BaseOrderVolume = data.BaseOrderVolume;

@@ -247,11 +247,11 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<Bot> UpdateBot(int botId, BotData data) => this.UpdateBotAsync(botId, data).Result;
-        public async Task<XCommasResponse<Bot>> UpdateBotAsync(int botId, BotData data)
+        public XCommasResponse<Bot> UpdateBot(int botId, BotUpdateData data) => this.UpdateBotAsync(botId, data).Result;
+        public async Task<XCommasResponse<Bot>> UpdateBotAsync(int botId, BotUpdateData data)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/update";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(new BotUpdateData(data)).Sign(this))
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
