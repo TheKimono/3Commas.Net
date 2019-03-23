@@ -482,3 +482,7 @@ var deal = response.Data;
  ETH: 0x92526204d90c337786214179699D877e0888bE31
  
  LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
+
+
+# Let's talk about crypto automation
+If you have questions or comments, or just want to chat about all things related to automation and crypto, please join me here on telegram: https://t.me/cryptobotdevs
