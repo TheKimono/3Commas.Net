@@ -9,7 +9,7 @@ namespace XCommas.Net.Objects
     {
         public BotStrategy(string name)
         {
-
+            this.Name = name;
         }
 
         [JsonProperty("strategy")]
