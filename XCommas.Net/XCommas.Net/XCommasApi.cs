@@ -288,13 +288,13 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<Bot> DeleteBot(int botId) => this.DeleteBotAsync(botId).Result;
-        public async Task<XCommasResponse<Bot>> DeleteBotAsync(int botId)
+        public XCommasResponse<bool> DeleteBot(int botId) => this.DeleteBotAsync(botId).Result;
+        public async Task<XCommasResponse<bool>> DeleteBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/delete";
             using (var request = XCommasRequest.Post(path).Sign(this))
             {
-                return await this.GetResponse<Bot>(request).ConfigureAwait(false);
+                return await this.GetResponse<bool>(request).ConfigureAwait(false);
             }
         }
 
