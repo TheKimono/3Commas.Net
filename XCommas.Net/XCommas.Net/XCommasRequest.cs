@@ -9,17 +9,20 @@ namespace XCommas.Net
     public class XCommasRequest : IDisposable
     {
         internal HttpRequestMessage request;
+        private JsonSerializerSettings serializerSettings;
         bool disposed = false;
         private string content;
 
         private XCommasRequest()
         {
             this.request = new HttpRequestMessage();
+            this.serializerSettings = new JsonSerializerSettings();
+            this.serializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
 
         public XCommasRequest WithSerializedContent(object content)
         {
-            this.content = JsonConvert.SerializeObject(content);
+            this.content = JsonConvert.SerializeObject(content, serializerSettings);
             request.Content = new StringContent(this.content, Encoding.UTF8, "application/json");
             return this;
         }

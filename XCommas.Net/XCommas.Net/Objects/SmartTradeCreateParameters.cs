@@ -8,6 +8,9 @@ namespace XCommas.Net.Objects
 {
     public class SmartTradeCreateParameters : SmartTradeCreateParametersBase
     {
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("buy_method")]
+        public SimpleTradeMethod BuyMethod { get; set; }
         [JsonProperty("buy_price")]
         public decimal BuyPrice { get; set; }
         [JsonProperty("trailing_buy_enabled")]
