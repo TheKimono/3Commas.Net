@@ -478,7 +478,7 @@ var deal = response.Data;
 # :penguin: Support the penguin: 
  If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of these cryptocurrency addresses:
 
- BTC: 1AwfQvdqp7zC4XB5Rg4AMy2JnR1rK6wtR2
+ BTC: 3MwN9vkd8tZanBX7j1PUBZsYF2hG6iP5FH
 
  ETH: 0x92526204d90c337786214179699D877e0888bE31
  
