@@ -10,6 +10,8 @@ namespace XCommas.Net.Objects
         BaseOrderplaced,
         [EnumMember(Value = "bought")]
         Bought,
+        [EnumMember(Value = "bought_safety_pending")]
+        BoughtStatusPending,
         [EnumMember(Value = "cancelled")]
         Cancelled,
         [EnumMember(Value = "completed")]

@@ -61,7 +61,7 @@ namespace XCommas.Net.Objects
         [JsonProperty("status")]
         public SmartTradeStepStatus Status { get; set; }
         [JsonProperty("market_order_id")]
-        public int MarketOrderId { get; set; }
+        public string MarketOrderId { get; set; }
         [JsonProperty("market_class")]
         public string MarketClass { get; set; }
         [JsonProperty("price_percentage")]
