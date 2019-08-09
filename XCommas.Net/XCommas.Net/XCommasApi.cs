@@ -442,6 +442,15 @@ namespace XCommas.Net
             }
         }
 
+        public XCommasResponse<SmartTradeStep> AddFundsToSmartTrade(SmartTradeAddFundsParameters data) => this.AddFundsToSmartTradeAsync(data).Result;
+        public async Task<XCommasResponse<SmartTradeStep>> AddFundsToSmartTradeAsync(SmartTradeAddFundsParameters data)
+        {
+            var path = $"{BaseAddress}/ver1/smart_trades/{data.SmartTradeId}/add_funds";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            {
+                return await this.GetResponse<SmartTradeStep>(request).ConfigureAwait(false);
+            }
+        }
         #endregion
 
         #region helper methods
