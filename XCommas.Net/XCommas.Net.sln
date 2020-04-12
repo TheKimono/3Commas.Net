@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCommas.Net", "XCommas.Net\XCommas.Net.csproj", "{2B85D7D8-69C5-4637-8310-088643F64C70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{AE4A5A15-CCE0-4031-AE20-1B5823D640AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2B85D7D8-69C5-4637-8310-088643F64C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B85D7D8-69C5-4637-8310-088643F64C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B85D7D8-69C5-4637-8310-088643F64C70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4A5A15-CCE0-4031-AE20-1B5823D640AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4A5A15-CCE0-4031-AE20-1B5823D640AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4A5A15-CCE0-4031-AE20-1B5823D640AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4A5A15-CCE0-4031-AE20-1B5823D640AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
