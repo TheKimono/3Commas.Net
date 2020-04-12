@@ -453,6 +453,20 @@ namespace XCommas.Net
         }
         #endregion
 
+        #region users
+
+        public XCommasResponse<bool> ChangeUserMode(UserMode userMode) => this.ChangeUserModeAsync(userMode).Result;
+        public async Task<XCommasResponse<bool>> ChangeUserModeAsync(UserMode userMode)
+        {
+            var path = $"{BaseAddress}/ver1/users/change_mode?mode={userMode.GetEnumMemberAttrValue()}";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<bool>(request).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
         #region helper methods
         private async Task<XCommasResponse<T>> GetResponse<T>(XCommasRequest request)
         {
