@@ -5,11 +5,11 @@ using System.Text;
 
 namespace XCommas.Net.Objects
 {
-    public enum User
+    public enum UserMode
     {
         [EnumMember(Value = "paper")]
-        paper,
+        Paper,
         [EnumMember(Value = "real")]
-        real
+        Real
     }
 }

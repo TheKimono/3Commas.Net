@@ -455,10 +455,10 @@ namespace XCommas.Net
 
         #region users
 
-        public XCommasResponse<bool> ChangeUserMode(User mode) => this.ChangeUserModeAsync(mode).Result;
-        public async Task<XCommasResponse<bool>> ChangeUserModeAsync(User mode)
+        public XCommasResponse<bool> ChangeUserMode(UserMode userMode) => this.ChangeUserModeAsync(userMode).Result;
+        public async Task<XCommasResponse<bool>> ChangeUserModeAsync(UserMode mode)
         {
-            var path = $"{BaseAddress}/ver1/users/change_mode?mode=" + mode;
+            var path = $"{BaseAddress}/ver1/users/change_mode?mode={mode.GetEnumMemberAttrValue()}";
             using (var request = XCommasRequest.Post(path).Sign(this))
             {
                 return await this.GetResponse<bool>(request).ConfigureAwait(false);
