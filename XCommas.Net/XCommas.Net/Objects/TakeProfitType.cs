@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Runtime.Serialization;
-using XCommas.Net.Converters;
+﻿using System.Runtime.Serialization;
 
 namespace XCommas.Net.Objects
 {

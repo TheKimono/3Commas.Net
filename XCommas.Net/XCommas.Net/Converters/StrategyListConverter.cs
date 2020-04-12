@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using XCommas.Net.Objects;
 
 namespace XCommas.Net.Converters

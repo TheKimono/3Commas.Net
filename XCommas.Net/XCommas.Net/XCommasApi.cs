@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
 using XCommas.Net.Objects;
-using Newtonsoft.Json.Linq;
 
 namespace XCommas.Net
 {
