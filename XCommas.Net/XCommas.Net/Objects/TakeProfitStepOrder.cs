@@ -5,14 +5,17 @@ namespace XCommas.Net.Objects
 {
     public class TakeProfitStepOrder
     {
+        [JsonProperty("position")]
+        public int Position { get; set; }
+
         [JsonProperty("percent")]
-        public double Percent { get; set; }
+        public decimal Percent { get; set; }
         [JsonProperty("price")]
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("price_method")]
         public PriceMethod? PriceMethod { get; set; }
         [JsonProperty("price_percentage")]
-        public double? PricePercentage { get; set; }
+        public decimal? PricePercentage { get; set; }
     }
 }

@@ -47,6 +47,9 @@ namespace XCommas.Net.Objects
 
     public class SmartTradeUpdateParameters : SmartTradeParametersBase
     {
+        [JsonProperty("smart_trade_id")]
+        public int SmartTradeId { get; set; }
+
         [JsonProperty("average_buy_price")]
         public decimal? AverageBuyPrice { get; set; }
         [JsonProperty("buy_price")]
