@@ -7,7 +7,6 @@ namespace XCommas.Net.Objects
     {
         [JsonProperty("position")]
         public int Position { get; set; }
-
         [JsonProperty("percent")]
         public decimal Percent { get; set; }
         [JsonProperty("price")]

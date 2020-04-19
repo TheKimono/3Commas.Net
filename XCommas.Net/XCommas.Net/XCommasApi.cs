@@ -451,6 +451,16 @@ namespace XCommas.Net
                 return await this.GetResponse<SmartTradeStep>(request).ConfigureAwait(false);
             }
         }
+
+        public XCommasResponse<SmartTrade> CancelOrderSmartTrade(int smartTradeId, int stepId) => this.CancelOrderSmartTradeAsync(smartTradeId, stepId).Result;
+        public async Task<XCommasResponse<SmartTrade>> CancelOrderSmartTradeAsync(int smartTradeId, int stepId)
+        {
+            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel_order?step_id={stepId}";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+            }
+        }
         #endregion
 
         #region users
