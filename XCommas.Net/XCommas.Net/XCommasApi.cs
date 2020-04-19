@@ -452,8 +452,8 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<SmartTrade> CancelOrderSmartTrade(int smartTradeId, int stepId) => this.CancelOrderSmartTradeAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<SmartTrade>> CancelOrderSmartTradeAsync(int smartTradeId, int stepId)
+        public XCommasResponse<SmartTrade> CancelSmartTradeOrder(int smartTradeId, int stepId) => this.CancelSmartTradeOrderAsync(smartTradeId, stepId).Result;
+        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeOrderAsync(int smartTradeId, int stepId)
         {
             var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel_order?step_id={stepId}";
             using (var request = XCommasRequest.Post(path).Sign(this))
