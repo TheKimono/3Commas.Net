@@ -418,6 +418,16 @@ namespace XCommas.Net
             }
         }
 
+         public XCommasResponse<SmartTrade> CancelSmartTradeStep(int smartTradeId, int stepId) => this.CancelSmartTradeStepAsync(smartTradeId, stepId).Result;
+        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeStepAsync(int smartTradeId, int stepId)
+        {
+            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel_order";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new PanicSellSmartTradeStepData { StepId = stepId }).Sign(this))
+            {
+                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+            }
+        }
+
         public XCommasResponse<SmartTrade> PanicSellSmartTrade(int smartTradeId) => this.PanicSellSmartTradeAsync(smartTradeId).Result;
         public async Task<XCommasResponse<SmartTrade>> PanicSellSmartTradeAsync(int smartTradeId)
         {
