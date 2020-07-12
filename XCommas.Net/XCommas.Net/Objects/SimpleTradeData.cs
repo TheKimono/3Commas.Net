@@ -16,5 +16,7 @@ namespace XCommas.Net.Objects
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("buy_method")]
         public SimpleTradeMethod TradeMethod { get; set; }
+        [JsonProperty("note")]
+        public string Note { get; set; }
     }
 }
