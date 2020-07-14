@@ -485,7 +485,7 @@ namespace XCommas.Net
                 var wrappedError = validatedResponse.Data["error"]?.Value<string>();
                 if (wrappedError != null)
                 {
-                    var errorMessage = $"{wrappedError} - {validatedResponse.Data["error_description"]?.Value<string>()}";
+                    var errorMessage = $"{wrappedError} - {validatedResponse.Data["error_description"]?.Value<string>()} - {validatedResponse.Data["error_attributes"]?.ToString()} ";
                     return new XCommasResponse<T>(default(T), validatedResponse.RawData, errorMessage);
                 }
             }
