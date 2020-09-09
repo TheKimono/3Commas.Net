@@ -328,6 +328,7 @@ var data = new BotData
     Name = "My new bot",
     TrailingEnabled = true,
     TrailingDeviation = 1.0m,
+    StartOrderType = StartOrderType.Limit,
     Strategies = new BotStrategy[]
     {
         new QflBotStrategy
@@ -386,6 +387,7 @@ var data = new BotData
     MaxActiveDeals = 1,
     ProfitCurrency = ProfitCurrency.QuoteCurrency,
     SafetyOrderStepPercentage = 2.5m,
+    StartOrderType = StartOrderType.Limit,
     MaxSafetyOrders = 2,
     TakeProfitType = TakeProfitType.Total,
     TakeProfit = 1.5m,

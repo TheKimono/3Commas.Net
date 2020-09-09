@@ -63,6 +63,7 @@ namespace XCommas.Net.Objects
             this.SafetyOrderStepPercentage = data.SafetyOrderStepPercentage;
             this.SafetyOrderVolume = data.SafetyOrderVolume;
             this.SafetyOrderVolumeType = data.SafetyOrderVolumeType;
+            this.StartOrderType = data.StartOrderType;
             this.StopLossPercentage = data.StopLossPercentage;
             this.Strategies = data.Strategies;
             this.TakeProfit = data.TakeProfit;
@@ -97,6 +98,7 @@ namespace XCommas.Net.Objects
             this.SafetyOrderStepPercentage = data.SafetyOrderStepPercentage;
             this.SafetyOrderVolume = data.SafetyOrderVolume;
             this.SafetyOrderVolumeType = data.SafetyOrderVolumeType;
+            this.StartOrderType = data.StartOrderType;
             this.StopLossPercentage = data.StopLossPercentage;
             this.Strategies = data.Strategies;
             this.TakeProfit = data.TakeProfit;
@@ -171,6 +173,9 @@ namespace XCommas.Net.Objects
         public LeverageType LeverageType { get; set; }
         [JsonProperty("leverage_custom_value")]
         public int? LeverageCustomValue { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("start_order_type")]
+        public StartOrderType StartOrderType { get; set; }
 
     }
 }
