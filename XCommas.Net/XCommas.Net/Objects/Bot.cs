@@ -35,9 +35,6 @@ namespace XCommas.Net.Objects
         public int AccountId { get; set; }
         [JsonProperty("is_enabled")]
         public bool IsEnabled { get; set; }
-        [JsonConverter(typeof(StringEnumConverter), typeof(TakeProfitTypeNamingStrategy))]
-        [JsonProperty("take_profit_type")]
-        public new TakeProfitType TakeProfitType { get; set; }
     }
 
     public class BotUpdateData : BotData
