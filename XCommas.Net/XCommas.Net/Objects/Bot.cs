@@ -55,6 +55,7 @@ namespace XCommas.Net.Objects
             this.MinPrice = data.MinPrice;
             this.MinVolumeBtc24h = data.MinVolumeBtc24h;
             this.Name = data.Name;
+            this.DisableAfterDealsCount = data.DisableAfterDealsCount;
             this.Pairs = data.Pairs;
             this.ProfitCurrency = data.ProfitCurrency;
             this.SafetyOrderStepPercentage = data.SafetyOrderStepPercentage;
@@ -90,6 +91,7 @@ namespace XCommas.Net.Objects
             this.MinPrice = data.MinPrice;
             this.MinVolumeBtc24h = data.MinVolumeBtc24h;
             this.Name = data.Name;
+            this.DisableAfterDealsCount = data.DisableAfterDealsCount;
             this.Pairs = data.Pairs;
             this.ProfitCurrency = data.ProfitCurrency;
             this.SafetyOrderStepPercentage = data.SafetyOrderStepPercentage;
@@ -129,6 +131,8 @@ namespace XCommas.Net.Objects
         public bool TrailingEnabled { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("disable_after_deals_count")]
+        public int? DisableAfterDealsCount { get; set; }
         [JsonProperty("take_profit")]
         public decimal TakeProfit { get; set; }
         [JsonProperty("base_order_volume")]
