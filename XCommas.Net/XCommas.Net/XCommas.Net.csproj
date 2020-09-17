@@ -12,7 +12,7 @@
     <Description>A feature complete and easy to use .Net wrapper of the official 3Commas API.</Description>
     <PackageProjectUrl>https://github.com/TheKimono/3Commas.Net</PackageProjectUrl>
     <PackageIconUrl>https://3commas.io/assets/favicon-e94c7cbd5562d5433a6b7a0d37385cd08d79ade4a2fa815bfb110eea019fce37.ico</PackageIconUrl>
-    <Version>1.0.15</Version>
+    <Version>1.0.16</Version>
     <AssemblyVersion>1.0.14.0</AssemblyVersion>
     <FileVersion>1.0.14.0</FileVersion>
   </PropertyGroup>
