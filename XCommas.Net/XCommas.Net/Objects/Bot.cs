@@ -173,7 +173,7 @@ namespace XCommas.Net.Objects
         [JsonProperty("leverage_type")]
         public LeverageType LeverageType { get; set; }
         [JsonProperty("leverage_custom_value")]
-        public int? LeverageCustomValue { get; set; }
+        public decimal? LeverageCustomValue { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("start_order_type")]
         public StartOrderType StartOrderType { get; set; }
