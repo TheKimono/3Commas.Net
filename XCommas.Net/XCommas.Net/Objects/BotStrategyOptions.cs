@@ -30,6 +30,7 @@ namespace XCommas.Net.Objects
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("type")]
         public TaPresetsType Type { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("time")]
         public IndicatorTime Time { get; set; }
     }
