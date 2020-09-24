@@ -63,6 +63,9 @@ namespace XCommas.Net.Objects
             this.SafetyOrderVolumeType = data.SafetyOrderVolumeType;
             this.StartOrderType = data.StartOrderType;
             this.StopLossPercentage = data.StopLossPercentage;
+            this.StopLossTimeoutEnabled = data.StopLossTimeoutEnabled;
+            this.StopLossTimeoutInSeconds = data.StopLossTimeoutInSeconds;
+            this.StopLossType = data.StopLossType;
             this.Strategies = data.Strategies;
             this.TakeProfit = data.TakeProfit;
             this.TakeProfitType = data.TakeProfitType;
@@ -99,6 +102,9 @@ namespace XCommas.Net.Objects
             this.SafetyOrderVolumeType = data.SafetyOrderVolumeType;
             this.StartOrderType = data.StartOrderType;
             this.StopLossPercentage = data.StopLossPercentage;
+            this.StopLossTimeoutEnabled = data.StopLossTimeoutEnabled;
+            this.StopLossTimeoutInSeconds = data.StopLossTimeoutInSeconds;
+            this.StopLossType = data.StopLossType;
             this.Strategies = data.Strategies;
             this.TakeProfit = data.TakeProfit;
             this.TakeProfitType = data.TakeProfitType;
@@ -150,6 +156,13 @@ namespace XCommas.Net.Objects
         public decimal MartingaleStepCoefficient { get; set; }
         [JsonProperty("stop_loss_percentage")]
         public decimal StopLossPercentage { get; set; }
+        [JsonProperty("stop_loss_timeout_enabled")]
+        public bool StopLossTimeoutEnabled { get; set; }
+        [JsonProperty("stop_loss_timeout_in_seconds")]
+        public int StopLossTimeoutInSeconds { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("stop_loss_type")]
+        public StopLossType StopLossType { get; set; }
         [JsonProperty("cooldown")]
         public int Cooldown { get; set; }
         [JsonProperty("min_volume_btc_24h")]
