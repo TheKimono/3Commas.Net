@@ -7,6 +7,10 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "buy_or_strong_buy")]
         Buy,
         [EnumMember(Value = "strong_buy")]
-        StrongBuy
+        StrongBuy,
+        [EnumMember(Value = "sell_or_strong_sell")]
+        Sell,
+        [EnumMember(Value = "strong_sell")]
+        StrongSell
     }
 }
