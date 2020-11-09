@@ -26,6 +26,8 @@ namespace XCommas.Net.Objects
         public decimal BtcValue { get; set; }
         [JsonProperty("usd_value")]
         public decimal UsdValue { get; set; }
+        [JsonProperty("on_orders")]
+        public decimal OnOrders { get; set; }
         [JsonProperty("134645")]
         public int AccountId { get; set; }
     }
