@@ -76,6 +76,16 @@ namespace XCommas.Net
             }
         }
 
+        public XCommasResponse<Deal> UpdateDeal(int dealId, DealUpdateData data) => this.UpdateDealAsync(dealId, data).Result;
+        public async Task<XCommasResponse<Deal>> UpdateDealAsync(int dealId, DealUpdateData data)
+        {
+            var path = $"{BaseAddress}/ver1/deals/{dealId}/update_deal";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            {
+                return await this.GetResponse<Deal>(request).ConfigureAwait(false);
+            }
+        }
+
         #endregion
 
         #region Accounts
