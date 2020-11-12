@@ -76,6 +76,16 @@ namespace XCommas.Net
             }
         }
 
+        public XCommasResponse<Deal> UpdateDeal(int dealId, DealUpdateData data) => this.UpdateDealAsync(dealId, data).Result;
+        public async Task<XCommasResponse<Deal>> UpdateDealAsync(int dealId, DealUpdateData data)
+        {
+            var path = $"{BaseAddress}/ver1/deals/{dealId}/update_deal";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            {
+                return await this.GetResponse<Deal>(request).ConfigureAwait(false);
+            }
+        }
+
         #endregion
 
         #region Accounts
@@ -321,6 +331,20 @@ namespace XCommas.Net
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
+        #region Marketplace
+
+        public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems => this.GetMarketplaceItemsAsync().Result;
+        public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync()
+        {
+            var path = $"{BaseAddress}/ver1/marketplace/items";
+            using (var request = XCommasRequest.Get(path).Sign(this))
+            {
+                return await this.GetResponse<MarketplaceItem[]>(request).ConfigureAwait(false);
             }
         }
 

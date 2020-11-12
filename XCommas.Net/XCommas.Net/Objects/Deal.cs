@@ -111,5 +111,7 @@ namespace XCommas.Net.Objects
         public decimal? TrailingDeviation { get; set; }
         [JsonProperty("trailing_max_price")]
         public decimal? TrailingMaxPrice { get; set; }
+        [JsonProperty("bot_events")]
+        public BotEvent[] BotEvents { get; set; }
     }
 }
