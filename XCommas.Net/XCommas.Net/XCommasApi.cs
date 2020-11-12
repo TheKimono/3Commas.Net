@@ -336,6 +336,20 @@ namespace XCommas.Net
 
         #endregion
 
+        #region Marketplace
+
+        public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems => this.GetMarketplaceItemsAsync().Result;
+        public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync()
+        {
+            var path = $"{BaseAddress}/ver1/marketplace/items";
+            using (var request = XCommasRequest.Get(path).Sign(this))
+            {
+                return await this.GetResponse<MarketplaceItem[]>(request).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
         #region Smart trades
 
         public XCommasResponse<SmartTrade> CreateSimpleSell(SimpleTradeData data) => this.CreateSimpleSellAsync(data).Result;
