@@ -8,6 +8,8 @@ namespace XCommas.Net.Objects
         NotSpecified,
         [EnumMember(Value = "cross")]
         Cross,
+        [EnumMember(Value = "isolated")]
+        Isolated,
         [EnumMember(Value = "custom")]
         Custom,
     }
