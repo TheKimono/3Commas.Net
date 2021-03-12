@@ -10,9 +10,9 @@ namespace XCommas.Net
     {
         public static string Sign(string stringToSign, string secret)
         {
-            using (HMACSHA256 hmac = new HMACSHA256(Encoding.ASCII.GetBytes(secret)))
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
             {
-                byte[] hashValue = hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign));
+                byte[] hashValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(stringToSign));
                 return HashEncode(hashValue);
             }
         }
