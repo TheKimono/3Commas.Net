@@ -76,6 +76,10 @@ namespace XCommas.Net.Objects
         public decimal TotalUsdProfit { get; set; }
         [JsonProperty("pretty_display_type")]
         public string PrettyDisplayType { get; set; }
+        [JsonProperty("exchange_name")]
+        public string ExchangeName { get; set; }
+        [JsonProperty("market_code")]
+        public string MarketCode { get; set; }
         [JsonProperty("address")]
         public string Address { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
