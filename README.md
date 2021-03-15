@@ -501,15 +501,5 @@ var response = await client.ShowDealAsync(dealId, 60);
 var deal = response.Data;
 ```
 
-# :penguin: Support the penguin: 
- If you want to support the continued development of XCommas.Net or just want to leave me a tip, please do so to one of these cryptocurrency addresses:
-
- BTC: 3MwN9vkd8tZanBX7j1PUBZsYF2hG6iP5FH
-
- ETH: 0x92526204d90c337786214179699D877e0888bE31
- 
- LTC: LhtJNQb1JKAGYQEUQTvKvCvYsnY2QoU4Z2
-
-
 # Let's talk about crypto automation
 If you have questions or comments, or just want to chat about all things related to automation and crypto, please join me here on telegram: https://t.me/cryptobotdevs
