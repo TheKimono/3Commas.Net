@@ -57,6 +57,17 @@ foreach(var market in response.Data)
 }
 ```
 
+### `GetMarketPairs` 
+```csharp
+var response = await client.GetMarketPairsAsync(marketCode);
+
+foreach(var marketPair in response.Data)
+{
+    //Do something with marketPair
+    Console.WriteLine(marketPair);
+}
+```
+
 ### `CreateAccount` 
 ```csharp
 var account = new AccountCreateData
@@ -459,6 +470,19 @@ foreach (var deal in response.Data)
 ```csharp
 var response = await client.UpdateMaxSafetyOrdersAsync(dealId, 60);
 var deal = response.Data;
+```
+
+### `AddFundsToDeal` 
+```csharp
+var data = new DealAddFundsParameters
+{
+    Quantity = 1,
+    IsMarket = false,
+    Rate = 10000,
+    DealId = 12345678
+};
+
+var response = await client.AddFundsToDealAsync(data);
 ```
 
 ### `PanicSellDeal` 
