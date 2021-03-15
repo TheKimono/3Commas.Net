@@ -97,7 +97,7 @@ namespace XCommas.Net
         }
 
         #endregion
-
+        
         #region Accounts
         public XCommasResponse<Account[]> GetAccounts => this.GetAccountsAsync().Result;
         public async Task<XCommasResponse<Account[]>> GetAccountsAsync()
@@ -116,6 +116,16 @@ namespace XCommas.Net
             using (var request = XCommasRequest.Get(path))
             {
                 return await this.GetResponse<Market[]>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<string[]> GetMarketPairs(string marketCode) => this.GetMarketPairsAsync(marketCode).Result;
+        public async Task<XCommasResponse<string[]>> GetMarketPairsAsync(string marketCode)
+        {
+            var path = $"{BaseAddress}/ver1/accounts/market_pairs?market_code={marketCode}";
+            using (var request = XCommasRequest.Get(path))
+            {
+                return await this.GetResponse<string[]>(request).ConfigureAwait(false);
             }
         }
 
