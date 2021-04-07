@@ -40,20 +40,6 @@ namespace XCommas.Net.Objects
         public decimal InvestmentBaseCurrency { get; set; }
         [JsonProperty("investment_quote_currency")]
         public decimal InvestmentQuoteCurrency { get; set; }
-        //[JsonProperty("grid_lines")]
-        //public GridLine GridLines { get; set; }
-    }
-
-    public class GridBotProfit
-    {
-        [JsonProperty("grid_line_id")]
-        public int GridLineId { get; set; }
-        [JsonProperty("profit")]
-        public decimal Profit { get; set; }
-        [JsonProperty("usd_profit")]
-        public decimal UsdProfit { get; set; }
-        [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
     }
 
     public class GridBotCreateData : GridBotData
