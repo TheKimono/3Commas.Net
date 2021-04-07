@@ -616,7 +616,7 @@ namespace XCommas.Net
             }
             catch(Exception ex)
             {
-                return new XCommasResponse<T>(default(T), validatedResponse.RawData, $"Could not serialize json to {typeof(T).Name} : {ex.ToString()}  json data: {validatedResponse.RawData}");
+                return new XCommasResponse<T>(default(T), validatedResponse.RawData, $"Could not serialize json to {typeof(T).Name} : {ex.ToString()}");
             }
         }
 
