@@ -221,6 +221,80 @@ namespace XCommas.Net
 
         #endregion
 
+        #region Grid Bots
+        
+        public XCommasResponse<GridBot[]> GetGridBots(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope botState = BotScope.Enabled, string sortBy = "bot_id", string sortDirection = "asc") => this.GetGridBotsAsync(limit, offset, accountIds, accountTypes, botState, sortBy, sortDirection).Result;
+        public async Task<XCommasResponse<GridBot[]>> GetGridBotsAsync(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope botState = BotScope.Enabled, string sortBy = "bot_id", string sortDirection = "asc")
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots?limit={limit}&offset={offset}&state={botState.GetEnumMemberAttrValue()}&sort_by={sortBy}&sort_direction={sortDirection}";
+            using (var request = XCommasRequest.Get(path).Sign(this))
+            {
+                return await this.GetResponse<GridBot[]>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<GridBot> CreateGridBot(int accountId, GridBotData data) => this.CreateGridBotAsync(accountId, data).Result;
+        public async Task<XCommasResponse<GridBot>> CreateGridBotAsync(int accountId, GridBotData data)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/manual";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new GridBotCreateData(accountId, data)).Sign(this))
+            {
+                return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<GridBot> UpdateGridBot(int gridBotId, GridBotData data) => this.UpdateGridBotAsync(gridBotId, data).Result;
+        public async Task<XCommasResponse<GridBot>> UpdateGridBotAsync(int gridBotId, GridBotData data)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/manual";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(new GridBotUpdateData(gridBotId, data)).Sign(this))
+            {
+                return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<GridBot> DisableGridBot(int gridBotId) => this.DisableGridBotAsync(gridBotId).Result;
+        public async Task<XCommasResponse<GridBot>> DisableGridBotAsync(int gridBotId)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/disable";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<GridBot> EnableGridBot(int gridBotId) => this.EnableGridBotAsync(gridBotId).Result;
+        public async Task<XCommasResponse<GridBot>> EnableGridBotAsync(int gridBotId)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/enable";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<bool> DeleteGridBot(int gridBotId) => this.DeleteGridBotAsync(gridBotId).Result;
+        public async Task<XCommasResponse<bool>> DeleteGridBotAsync(int gridBotId)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/delete";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<bool>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<GridBot> ShowGridBot(int botId) => this.ShowGridBotAsync(botId).Result;
+        public async Task<XCommasResponse<GridBot>> ShowGridBotAsync(int botId)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{botId}";
+            using (var request = XCommasRequest.Get(path).Sign(this))
+            {
+                return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
         #region Bots
 
         public XCommasResponse<BotPairsBlackListData> GetBotPairsBlackList => this.GetBotPairsBlackListAsync().Result;
