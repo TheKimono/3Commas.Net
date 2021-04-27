@@ -60,6 +60,14 @@ namespace XCommas.Net
             return result;
         }
 
+        public static XCommasRequest Delete(string uri)
+        {
+            var result = new XCommasRequest();
+            result.request.RequestUri = new Uri(uri, UriKind.RelativeOrAbsolute);
+            result.request.Method = new HttpMethod("DELETE");
+            return result;
+        }
+
         public static XCommasRequest Patch(string uri)
         {
             var result = new XCommasRequest();

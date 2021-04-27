@@ -4,7 +4,7 @@ using System;
 
 namespace XCommas.Net.Objects
 {
-    public class SmartTrade
+    public class SmartTradeV1
     {
         [JsonProperty("id")]
         public int Id { get; set; }

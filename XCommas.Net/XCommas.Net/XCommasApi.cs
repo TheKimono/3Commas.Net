@@ -1,9 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using XCommas.Net.Objects;
+using XCommas.Net.Objects.SmartTrades.V2;
+using Account = XCommas.Net.Objects.Account;
+using SmartTradeStep = XCommas.Net.Objects.SmartTradeStep;
 
 namespace XCommas.Net
 {
@@ -457,135 +462,95 @@ namespace XCommas.Net
 
         #region Smart trades
 
-        public XCommasResponse<SmartTrade> CreateSimpleSell(SimpleTradeData data) => this.CreateSimpleSellAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSimpleSellAsync(SimpleTradeData data)
+        private static string BuildQueryString(Dictionary<string, string> param)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_simple_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            var qStringBuilder = new StringBuilder();
+
+            if (param != null && param.Count > 0)
             {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+                qStringBuilder.Append("?");
+                foreach (var p in param)
+                {
+                    qStringBuilder.Append($"{Uri.EscapeDataString(p.Key)}={Uri.EscapeDataString(p.Value)}&");
+                }
+                qStringBuilder.Length--;
+            }
+            return qStringBuilder.ToString();
+        }
+
+        private void AddIfHasValue(Dictionary<string, string> dict, string key, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value) && !dict.ContainsKey(key))
+            {
+                dict.Add(key, value);
             }
         }
 
-        public XCommasResponse<SmartTrade> CreateSimpleBuy(SimpleTradeData data) => this.CreateSimpleBuyAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSimpleBuyAsync(SimpleTradeData data)
+        public XCommasResponse<SmartTrade[]> GetSmartTrades(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage) => this.GetSmartTradesAsync(accountId, pair, type, status, orderBy, orderDirection, page, perPage).Result;
+        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_simple_buy";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            var param = new Dictionary<string, string>();
+            if (accountId.HasValue)
             {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+                param.Add("accountId", accountId.Value.ToString());
             }
-        }
+            AddIfHasValue(param, "pair", pair);
+            AddIfHasValue(param, "type", type);
+            AddIfHasValue(param, "status", status);
+            AddIfHasValue(param, "order_by", orderBy);
+            AddIfHasValue(param, "order_direction", orderDirection);
+            AddIfHasValue(param, "page", page.ToString());
+            AddIfHasValue(param, "per_page", perPage.ToString());
 
-        public XCommasResponse<SmartTrade> CreateSmartSell(SmartSellCreateParameters data) => this.CreateSmartSellAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartSellAsync(SmartSellCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
+            var qString = BuildQueryString(param);
+            var path = $"{BaseAddress}/v2/smart_trades{qString}";
 
-        public XCommasResponse<SmartTrade> CreateSmartCover(SmartCoverCreateParameters data) => this.CreateSmartCoverAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartCoverAsync(SmartCoverCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_cover";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> CreateSmartTrade(SmartTradeCreateParameters data) => this.CreateSmartTradeAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartTradeAsync(SmartTradeCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_trade";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade[]> GetSmartTrades(int limit = 50, int? offset = null, int? accountId = null, SmartTradeScope smartTradeScope = SmartTradeScope.All, string type = null) => this.GetSmartTradesAsync(limit, offset, accountId, smartTradeScope, type).Result;
-        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int limit = 50, int? offset = null, int? accountId = null, SmartTradeScope smartTradeScope = SmartTradeScope.All, string type = null)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades?limit={limit}&offset={offset}&account_id={accountId}&scope={smartTradeScope.GetEnumMemberAttrValue()}&type={type}";
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<SmartTrade[]>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<Deal> PanicSellSmartTradeStep(int smartTradeId, int stepId) => this.PanicSellSmartTradeStepAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<Deal>> PanicSellSmartTradeStepAsync(int smartTradeId, int stepId)
+        public XCommasResponse<SmartTrade> CreateSmartTrade(SmartTradeCreateRequest request) => this.CreateSmartTradeAsync(request).Result;
+        public async Task<XCommasResponse<SmartTrade>> CreateSmartTradeAsync(SmartTradeCreateRequest createRequest)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/step_panic_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new PanicSellSmartTradeStepData { StepId = stepId }).Sign(this))
-            {
-                return await this.GetResponse<Deal>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> UpdateSmartTrade(int smartTradeId, SmartTradeUpdateParameters data) => this.UpdateSmartTradeAsync(smartTradeId, data).Result;
-        public async Task<XCommasResponse<SmartTrade>> UpdateSmartTradeAsync(int smartTradeId, SmartTradeUpdateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/update";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(createRequest).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> CancelSmartTrade(int smartTradeId) => this.CancelSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> UpdateSmartTrade(int id, SmartTradeCreateRequest request) => this.UpdateSmartTradeAsync(id, request).Result;
+        public async Task<XCommasResponse<SmartTrade>> UpdateSmartTradeAsync(int id, SmartTradeCreateRequest createRequest)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(createRequest).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> PanicSellSmartTrade(int smartTradeId) => this.PanicSellSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> PanicSellSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> GetSmartTrade(int id) => this.GetSmartTradeAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> GetSmartTradeAsync(int id)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/panic_sell";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> RefreshSmartTrade(int smartTradeId) => this.RefreshSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> RefreshSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> CancelSmartTrade(int id) => this.CancelSmartTradeAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeAsync(int id)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/force_process";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Delete(path).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTradeStep> AddFundsToSmartTrade(SmartTradeAddFundsParameters data) => this.AddFundsToSmartTradeAsync(data).Result;
-        public async Task<XCommasResponse<SmartTradeStep>> AddFundsToSmartTradeAsync(SmartTradeAddFundsParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/{data.SmartTradeId}/add_funds";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTradeStep>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> CancelSmartTradeOrder(int smartTradeId, int stepId) => this.CancelSmartTradeOrderAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeOrderAsync(int smartTradeId, int stepId)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel_order?step_id={stepId}";
-            using (var request = XCommasRequest.Post(path).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
         #endregion
         
         #region users
