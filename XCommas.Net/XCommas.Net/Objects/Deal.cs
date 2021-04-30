@@ -33,6 +33,8 @@ namespace XCommas.Net.Objects
         public int CurrentActiveSafetyOrdersCount { get; set; }
         [JsonProperty("completed_safety_orders_count")]
         public int CompletedSafetyOrdersCount { get; set; }
+        [JsonProperty("completed_manual_safety_orders_count")]
+        public int CompletedManualSafetyOrdersCount { get; set; }
         [JsonProperty("cancellable?")]
         public bool IsCancellable { get; set; }
         [JsonProperty("panic_sellable?")]
