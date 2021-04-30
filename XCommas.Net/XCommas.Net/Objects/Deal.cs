@@ -33,6 +33,8 @@ namespace XCommas.Net.Objects
         public int CurrentActiveSafetyOrdersCount { get; set; }
         [JsonProperty("completed_safety_orders_count")]
         public int CompletedSafetyOrdersCount { get; set; }
+        [JsonProperty("completed_manual_safety_orders_count")]
+        public int CompletedManualSafetyOrdersCount { get; set; }
         [JsonProperty("cancellable?")]
         public bool IsCancellable { get; set; }
         [JsonProperty("panic_sellable?")]
@@ -113,5 +115,15 @@ namespace XCommas.Net.Objects
         public decimal? TrailingMaxPrice { get; set; }
         [JsonProperty("bot_events")]
         public BotEvent[] BotEvents { get; set; }
+        [JsonProperty("stop_loss_timeout_enabled")]
+        public bool StopLossTimeoutEnabled { get; set; }
+        [JsonProperty("stop_loss_timeout_in_seconds")]
+        public int StopLossTimeoutInSeconds { get; set; }
+        [JsonProperty("stop_loss_percentage")]
+        public decimal? StopLossPercentage { get; set; }
+        [JsonProperty("stop_loss_type")]
+        public StopLossType StopLossType { get; set; }
+        [JsonProperty("stop_loss_price")]
+        public decimal? StopLossPrice { get; set; }
     }
 }
