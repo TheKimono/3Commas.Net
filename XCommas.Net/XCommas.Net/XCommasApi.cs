@@ -486,16 +486,6 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<SmartTrade> AddFundsToSmartTrade(int id, AddFundsToSmartTradeParams param) => this.AddFundsToSmartTradeAsync(id, param).Result;
-        public async Task<XCommasResponse<SmartTrade>> AddFundsToSmartTradeAsync(int id, AddFundsToSmartTradeParams param)
-        {
-            var path = $"{BaseAddress}/v2/smart_trades/{id}/add_funds";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(param).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
-
         public XCommasResponse<SmartTrade[]> GetSmartTrades(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage) => this.GetSmartTradesAsync(accountId, pair, type, status, orderBy, orderDirection, page, perPage).Result;
         public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage)
         {
@@ -556,6 +546,26 @@ namespace XCommas.Net
         {
             var path = $"{BaseAddress}/v2/smart_trades/{id}";
             using (var request = XCommasRequest.Delete(path).Sign(this))
+            {
+                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<SmartTrade> CloseSmartTradeByMarket(int id) => this.CloseSmartTradeByMarketAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> CloseSmartTradeByMarketAsync(int id)
+        {
+            var path = $"{BaseAddress}/v2/smart_trades/{id}/close_by_market";
+            using (var request = XCommasRequest.Post(path).Sign(this))
+            {
+                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<SmartTrade> AddFundsToSmartTrade(int id, AddFundsToSmartTradeParams param) => this.AddFundsToSmartTradeAsync(id, param).Result;
+        public async Task<XCommasResponse<SmartTrade>> AddFundsToSmartTradeAsync(int id, AddFundsToSmartTradeParams param)
+        {
+            var path = $"{BaseAddress}/v2/smart_trades/{id}/add_funds";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(param).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
