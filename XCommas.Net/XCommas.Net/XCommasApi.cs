@@ -223,10 +223,12 @@ namespace XCommas.Net
 
         #region Grid Bots
         
-        public XCommasResponse<GridBot[]> GetGridBots(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope botState = BotScope.Enabled, string sortBy = "bot_id", string sortDirection = "asc") => this.GetGridBotsAsync(limit, offset, accountIds, accountTypes, botState, sortBy, sortDirection).Result;
-        public async Task<XCommasResponse<GridBot[]>> GetGridBotsAsync(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope botState = BotScope.Enabled, string sortBy = "bot_id", string sortDirection = "asc")
+        public XCommasResponse<GridBot[]> GetGridBots(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope? botState = null, string sortBy = "bot_id", string sortDirection = "asc") => this.GetGridBotsAsync(limit, offset, accountIds, accountTypes, botState, sortBy, sortDirection).Result;
+        public async Task<XCommasResponse<GridBot[]>> GetGridBotsAsync(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope? botState = null, string sortBy = "bot_id", string sortDirection = "asc")
         {
-            var path = $"{BaseAddress}/ver1/grid_bots?limit={limit}&offset={offset}&state={botState.GetEnumMemberAttrValue()}&sort_by={sortBy}&sort_direction={sortDirection}";
+            var path = $"{BaseAddress}/ver1/grid_bots?limit={limit}&offset={offset}&sort_by={sortBy}&sort_direction={sortDirection}";
+            if (botState.HasValue) path += $"&state={botState.GetEnumMemberAttrValue()}";
+            
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<GridBot[]>(request).ConfigureAwait(false);
@@ -327,10 +329,13 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<Bot[]> GetBots(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope botScope = BotScope.Enabled, Strategy strategy = Strategy.Long) => this.GetBotsAsync(limit, offset, accountId, botId, botScope, strategy).Result;
-        public async Task<XCommasResponse<Bot[]>> GetBotsAsync(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope botScope = BotScope.Enabled, Strategy strategy = Strategy.Long)
+        public XCommasResponse<Bot[]> GetBots(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope? botScope = null, Strategy? strategy = null) => this.GetBotsAsync(limit, offset, accountId, botId, botScope, strategy).Result;
+        public async Task<XCommasResponse<Bot[]>> GetBotsAsync(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, BotScope? botScope = null, Strategy? strategy = null)
         {
-            var path = $"{BaseAddress}/ver1/bots?limit={limit}&offset={offset}&account_id={accountId}&bot_id={botId}&scope={botScope.GetEnumMemberAttrValue()}&strategy={strategy.GetEnumMemberAttrValue()}";
+            var path = $"{BaseAddress}/ver1/bots?limit={limit}&offset={offset}&account_id={accountId}&bot_id={botId}";
+            if (botScope.HasValue) path += $"&scope={botScope.GetEnumMemberAttrValue()}";
+            if (strategy.HasValue) path += $"&strategy={strategy.GetEnumMemberAttrValue()}";
+
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<Bot[]>(request).ConfigureAwait(false);
