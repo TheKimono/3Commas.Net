@@ -16,12 +16,16 @@ namespace XCommas.Net
             MissingMemberHandling = MissingMemberHandling.Ignore
         });
 
+        private readonly HttpClient _httpClient;
         public string ApiKey { get; set; }
         public string Secret { get; set; }
-        public XCommasApi(string apiKey, string secret)
+
+
+        public XCommasApi(string apiKey, string secret, HttpClient httpClient = null)
         {
             this.ApiKey = apiKey;
             this.Secret = secret;
+            this._httpClient = httpClient ?? new HttpClient();
         }
 
         #region Deals
@@ -97,7 +101,7 @@ namespace XCommas.Net
         }
 
         #endregion
-        
+
         #region Accounts
         public XCommasResponse<Account[]> GetAccounts => this.GetAccountsAsync().Result;
         public async Task<XCommasResponse<Account[]>> GetAccountsAsync()
@@ -139,10 +143,10 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<CurrencyRate> GetCurrencyRate(string pair, string prettyDisplayType = "Binance") => this.GetCurrencyRateAsync(pair, prettyDisplayType).Result;
-        public async Task<XCommasResponse<CurrencyRate>> GetCurrencyRateAsync(string pair, string prettyDisplayType = "Binance")
+        public XCommasResponse<CurrencyRate> GetCurrencyRate(string pair, string marketcode = "binance") => this.GetCurrencyRateAsync(pair, marketcode).Result;
+        public async Task<XCommasResponse<CurrencyRate>> GetCurrencyRateAsync(string pair, string marketcode = "binance")
         {
-            var path = $"{BaseAddress}/ver1/accounts/currency_rates?pretty_display_type={prettyDisplayType}&pair={pair}";
+            var path = $"{BaseAddress}/ver1/accounts/currency_rates?market_code={marketcode}&pair={pair}";
             using (var request = XCommasRequest.Get(path))
             {
                 return await this.GetResponse<CurrencyRate>(request).ConfigureAwait(false);
@@ -222,13 +226,13 @@ namespace XCommas.Net
         #endregion
 
         #region Grid Bots
-        
+
         public XCommasResponse<GridBot[]> GetGridBots(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope? botState = null, string sortBy = "bot_id", string sortDirection = "asc") => this.GetGridBotsAsync(limit, offset, accountIds, accountTypes, botState, sortBy, sortDirection).Result;
         public async Task<XCommasResponse<GridBot[]>> GetGridBotsAsync(int limit = 10, int? offset = null, int[] accountIds = null, string accountTypes = null, BotScope? botState = null, string sortBy = "bot_id", string sortDirection = "asc")
         {
             var path = $"{BaseAddress}/ver1/grid_bots?limit={limit}&offset={offset}&sort_by={sortBy}&sort_direction={sortDirection}";
             if (botState.HasValue) path += $"&state={botState.GetEnumMemberAttrValue()}";
-            
+
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<GridBot[]>(request).ConfigureAwait(false);
@@ -619,7 +623,7 @@ namespace XCommas.Net
             {
                 return new XCommasResponse<T>(validatedResponse.Data.ToObject<T>(DefaultSerializer), validatedResponse.RawData, null);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new XCommasResponse<T>(default(T), validatedResponse.RawData, $"Could not serialize json to {typeof(T).Name} : {ex.ToString()}");
             }
@@ -656,13 +660,10 @@ namespace XCommas.Net
         {
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var response = await client.SendAsync(request.request);
-                    var content = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.SendAsync(request.request);
+                var content = await response.Content.ReadAsStringAsync();
 
-                    return new XCommasResponse<string>(content, null, null);
-                }
+                return new XCommasResponse<string>(content, null, null);
             }
             catch (Exception ex)
             {
