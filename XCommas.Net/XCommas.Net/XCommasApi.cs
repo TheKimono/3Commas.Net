@@ -16,16 +16,18 @@ namespace XCommas.Net
             MissingMemberHandling = MissingMemberHandling.Ignore
         });
 
-        private readonly HttpClient _httpClient;
+        private HttpClient HttpClientSingleton => _httpClientSingleton ?? (_httpClientSingleton = new HttpClient());
+
+        private readonly IHttpClientFactory _httpClientFactory;
+        private HttpClient _httpClientSingleton;
         public string ApiKey { get; set; }
         public string Secret { get; set; }
 
-
-        public XCommasApi(string apiKey, string secret, HttpClient httpClient = null)
+        public XCommasApi(string apiKey, string secret, IHttpClientFactory httpClientFactory = null)
         {
             this.ApiKey = apiKey;
             this.Secret = secret;
-            this._httpClient = httpClient ?? new HttpClient();
+            this._httpClientFactory = httpClientFactory;
         }
 
         #region Deals
@@ -660,9 +662,10 @@ namespace XCommas.Net
         {
             try
             {
-                var response = await _httpClient.SendAsync(request.request);
+                var httpClient = _httpClientFactory == null ? HttpClientSingleton : _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(request.request);
                 var content = await response.Content.ReadAsStringAsync();
-
+                
                 return new XCommasResponse<string>(content, null, null);
             }
             catch (Exception ex)
