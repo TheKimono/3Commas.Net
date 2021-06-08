@@ -442,11 +442,11 @@ namespace XCommas.Net
         #endregion
 
         #region Marketplace
-
-        public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems => this.GetMarketplaceItemsAsync().Result;
-        public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync()
+        
+        public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All) => this.GetMarketplaceItemsAsync(limit, offset, scope).Result;
+        public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All)
         {
-            var path = $"{BaseAddress}/ver1/marketplace/items";
+            var path = $"{BaseAddress}/ver1/marketplace/items?limit={limit}&offset={offset}&scope={scope.GetEnumMemberAttrValue()}";
             using (var request = XCommasRequest.Get(path).Sign(this))
             {
                 return await this.GetResponse<MarketplaceItem[]>(request).ConfigureAwait(false);
@@ -587,6 +587,12 @@ namespace XCommas.Net
             }
         }
         #endregion
+
+        #region Smart Trades V2
+
+        #endregion
+
+
 
         #region users
 
