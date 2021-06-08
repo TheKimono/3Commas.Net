@@ -587,13 +587,7 @@ namespace XCommas.Net
             }
         }
         #endregion
-
-        #region Smart Trades V2
-
-        #endregion
-
-
-
+        
         #region users
 
         public XCommasResponse<bool> ChangeUserMode(UserMode userMode) => this.ChangeUserModeAsync(userMode).Result;
