@@ -15,6 +15,8 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "CCI-40\u003c-200")]
         CCI_40_200,
         [EnumMember(Value = "BB-20-1-UB")]
-        BB_20_1_UB
+        BB_20_1_UB,
+        [EnumMember(Value = "BB-20-2-UB")]
+        BB_20_2_UB
     }
 }
