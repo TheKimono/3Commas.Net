@@ -29,7 +29,7 @@ namespace XCommas.Net
         public string ApiKey { get; set; }
         public string Secret { get; set; }
 
-        public XCommasApi(string apiKey, string secret, IHttpClientFactory httpClientFactory = null)
+        public XCommasApi(string apiKey, string secret, IHttpClientFactory httpClientFactory = null, UserMode userMode = UserMode.Real)
         {
             this.ApiKey = apiKey;
             this.Secret = secret;
