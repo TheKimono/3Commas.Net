@@ -6,9 +6,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using XCommas.Net.Objects;
-using XCommas.Net.Objects.SmartTrades.V2;
+using XCommas.Net.Objects.SmartTrades;
 using Account = XCommas.Net.Objects.Account;
-using SmartTradeStep = XCommas.Net.Objects.SmartTradeStep;
 
 namespace XCommas.Net
 {
@@ -449,7 +448,7 @@ namespace XCommas.Net
         #endregion
 
         #region Marketplace
-        
+
         public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All) => this.GetMarketplaceItemsAsync(limit, offset, scope).Result;
         public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All)
         {
@@ -488,8 +487,8 @@ namespace XCommas.Net
             }
         }
 
-        public XCommasResponse<SmartTrade[]> GetSmartTrades(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage) => this.GetSmartTradesAsync(accountId, pair, type, status, orderBy, orderDirection, page, perPage).Result;
-        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int? accountId, string pair, string type, string status, string orderBy, string orderDirection, int? page, int? perPage)
+        public XCommasResponse<SmartTrade[]> GetSmartTrades(int? accountId = null, string pair = null, SmartTradeType? type = null, SmartTradeStatus? status = null, OrderBy? orderBy = null, OrderDirection? orderDirection = null, int? page = null, int? perPage = null) => this.GetSmartTradesAsync(accountId, pair, type, status, orderBy, orderDirection, page, perPage).Result;
+        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int? accountId = null, string pair = null, SmartTradeType? type = null, SmartTradeStatus? status = null, OrderBy? orderBy = null, OrderDirection? orderDirection = null, int? page = null, int? perPage = null)
         {
             var param = new Dictionary<string, string>();
             if (accountId.HasValue)
@@ -497,10 +496,10 @@ namespace XCommas.Net
                 param.Add("accountId", accountId.Value.ToString());
             }
             AddIfHasValue(param, "pair", pair);
-            AddIfHasValue(param, "type", type);
-            AddIfHasValue(param, "status", status);
-            AddIfHasValue(param, "order_by", orderBy);
-            AddIfHasValue(param, "order_direction", orderDirection);
+            AddIfHasValue(param, "type", type?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "status", status?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "order_by", orderBy?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "order_direction", orderDirection?.GetEnumMemberAttrValue());
             AddIfHasValue(param, "page", page.ToString());
             AddIfHasValue(param, "per_page", perPage.ToString());
 
@@ -574,7 +573,7 @@ namespace XCommas.Net
         }
 
         #endregion
-        
+
         #region users
 
         public XCommasResponse<bool> ChangeUserMode(UserMode userMode) => this.ChangeUserModeAsync(userMode).Result;
@@ -652,7 +651,7 @@ namespace XCommas.Net
                 var httpClient = _httpClientFactory == null ? HttpClientSingleton : _httpClientFactory.CreateClient();
                 var response = await httpClient.SendAsync(request.request);
                 var content = await response.Content.ReadAsStringAsync();
-                
+
                 return new XCommasResponse<string>(content, null, null);
             }
             catch (Exception ex)
