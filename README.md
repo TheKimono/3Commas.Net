@@ -137,116 +137,11 @@ var response = await client.RemoveAccountAsync(accountId);
 ```
 
 ## Smart Trades
-This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md).
+This section covers the methods described in the official documentation [here](https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_v2_api.md).
 
-### `CreateSimpleSell` 
+### `GetSmartTrade` 
 ```csharp
-var data = new SimpleTradeData
-{
-    AccountId = accountId,
-    Pair = "BTC_XRP",
-    Price = 0.001m,
-    TradeMethod = SimpleTradeMethod.Limit,
-    Units = 1000,
-};
-
-var response = await client.CreateSimpleSellAsync(data);
-```
-
-### `CreateSimpleBuy` 
-```csharp
-var data = new SimpleTradeData
-{
-    AccountId = accountId,
-    Pair = "BTC_ETH",
-    Price = 0.001m,
-    TradeMethod = SimpleTradeMethod.Conditional,
-    Units = 1000,
-};
-
-var response = await client.CreateSimpleBuyAsync(data);
-```
-
-### `CreateSmartSell` 
-```csharp
-var data = new SmartSellCreateParameters
-{
-    AccountId = accountId,
-    Pair = "BTC_ETH",
-    AverageBuyPrice = 0.0004m,
-    Note = "Sell moon",
-    StopLossEnabled = true,
-    StopLossPercentageCondition = 10m,
-    StopLossPriceMethod = PriceMethod.Last,
-    StopLossTimeoutEnabled = true,
-    StopLossTimeoutSeconds = 300,
-    TakeProfitEnabled = true,
-    TakeProfitType = SmartTradeCompletionType.StepSell,
-    TakeProfitStepOrders = new[]
-    {
-        new TakeProfitStepOrder
-        {
-            Price = 0.3,
-            Percent = 50,
-            PriceMethod = PriceMethod.Ask,
-        },
-        new TakeProfitStepOrder
-        {
-            Price = 0.4,
-            Percent = 50,
-            PriceMethod = PriceMethod.Last,
-        },
-    }.ToList(),
-    UnitsToBuy = 500,                
-};
-
-var response = await client.CreateSmartSellAsync(data);
-```
-
-### `CreateSmartSell` 
-```csharp
-var data = new SmartCoverCreateParameters
-{
-    AccountId = accountId,
-    Pair = "BTC_ETH",
-    Note = "Rebuy later",
-    StopLossEnabled = true,
-    StopLossPercentageCondition = 10m,
-    StopLossPriceMethod = PriceMethod.Last,
-    StopLossTimeoutEnabled = true,
-    StopLossTimeoutSeconds = 300,
-    TakeProfitEnabled = true,
-    TakeProfitType = SmartTradeCompletionType.Classic,
-    TakeProfitPriceCondition = 0.001m,
-    TakeProfitPriceMethod = PriceMethod.Bid,
-    UnitsToBuy = 5,                
-};
-
-var response = await client.CreateSmartCoverAsync(data);
-```
-
-### `CreateSmartTrade` 
-```csharp
-var data = new SmartTradeCreateParameters
-{
-    AccountId = accountId,
-    Pair = "BTC_ETH",
-    Note = "Buy the dip and sell the moon",
-    StopLossEnabled = false,
-    TakeProfitEnabled = true,
-    TakeProfitType = SmartTradeCompletionType.Classic,
-    TakeProfitPercentageCondition = 0.5m,
-    TakeProfitPriceMethod = PriceMethod.Bid,
-    UnitsToBuy = 5,
-    TrailingBuyEnabled = true,
-    TrailingBuyStep = 1.0m,
-    BuyMethod = SimpleTradeMethod.Conditional,
-    BuyPrice = 0.01m,
-    TrailingTakeProfit = true,
-    TrailingTakeProfitStep = 5.0m
-};
-
-var response = await client.CreateSmartTradeAsync(data);
+var response = await client.GetSmartTradeAsync(smartTradeId);
 ```
 
 ### `GetSmartTrades` 
@@ -260,26 +155,29 @@ foreach(var smartTrade in response.Data)
 }
 ```
 
-### `PanicSellSmartTradeStep` 
+### `CreateSmartTrade` 
 ```csharp
-var response = await client.PanicSellSmartTradeStepAsync(smartTradeId, stepId);
+var data = new SmartTradeCreateRequest
+{
+    Id = 123,
+    AccountId = accountId,
+    Pair = "BTC_ETH",
+    Position = ...,
+    TakeProfit = ...,
+    StopLoss = ...
+};
+
+var response = await client.CreateSmartTradeAsync(data);
 ```
 
 ### `UpdateSmartTrade` 
 ```csharp
-var data = new SmartTradeUpdateParameters
+var data = new SmartTradeCreateRequest
 {
-    Note = "Moon cancelled",
-    StopLossEnabled = false,
-    TakeProfitEnabled = true,
-    TakeProfitType = SmartTradeCompletionType.Classic,
-    TakeProfitPriceCondition = 0.04m,
-    TakeProfitPriceMethod = PriceMethod.Bid,
-    TrailingBuyEnabled = true,
-    TrailingBuyStep = 1.0m,
-    BuyPrice = 0.01m,
-    TrailingTakeProfit = true,
-    TrailingTakeProfitStep = 1.0m
+    Id = 123,
+    Position = ...,
+    TakeProfit = ...,
+    StopLoss = ...
 };
 
 var response = await client.UpdateSmartTradeAsync(smartTradeId, data);
@@ -290,14 +188,22 @@ var response = await client.UpdateSmartTradeAsync(smartTradeId, data);
 var response = await client.CancelSmartTradeAsync(smartTradeId);
 ```
 
-### `PanicSellSmartTrade` 
+### `CloseSmartTradeByMarket` 
 ```csharp
-var response = await client.PanicSellSmartTradeAsync(smartTradeId);
+var response = await client.CloseSmartTradeByMarketAsync(smartTradeId);
 ```
 
-### `RefreshSmartTrade` 
+### `AddFundsToSmartTrade` 
 ```csharp
-var response = await client.RefreshSmartTradeAsync(smartTradeId);
+var data = new AddFundsToSmartTradeParams
+{
+    Id = 123,
+    OrderType = ...,
+    Units = ...,
+    Price = ...,
+};
+
+var response = await client.AddFundsToSmartTradeAsync(smartTradeId);
 ```
 
 ## Bots
