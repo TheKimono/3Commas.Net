@@ -2,6 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Text;
+using XCommas.Net.Objects;
 
 namespace XCommas.Net
 {
@@ -23,6 +24,16 @@ namespace XCommas.Net
         {
             this.content = JsonConvert.SerializeObject(content, serializerSettings);
             request.Content = new StringContent(this.content, Encoding.UTF8, "application/json");
+            return this;
+        }
+
+        public XCommasRequest Force(UserMode userMode)
+        {
+            var userModeStr = userMode == UserMode.Paper
+                ? "paper"
+                : "real";
+            this.request.Headers.Add("Forced-Mode", userModeStr);
+
             return this;
         }
 
@@ -57,6 +68,14 @@ namespace XCommas.Net
             var result = new XCommasRequest();
             result.request.RequestUri = new Uri(uri, UriKind.RelativeOrAbsolute);
             result.request.Method = new HttpMethod("GET");
+            return result;
+        }
+
+        public static XCommasRequest Delete(string uri)
+        {
+            var result = new XCommasRequest();
+            result.request.RequestUri = new Uri(uri, UriKind.RelativeOrAbsolute);
+            result.request.Method = new HttpMethod("DELETE");
             return result;
         }
 

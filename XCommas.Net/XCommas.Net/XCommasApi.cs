@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using XCommas.Net.Objects;
+using XCommas.Net.Objects.SmartTrades;
+using Account = XCommas.Net.Objects.Account;
 
 namespace XCommas.Net
 {
@@ -20,14 +24,16 @@ namespace XCommas.Net
 
         private readonly IHttpClientFactory _httpClientFactory;
         private HttpClient _httpClientSingleton;
+        public UserMode UserMode { get; set; }
         public string ApiKey { get; set; }
         public string Secret { get; set; }
 
-        public XCommasApi(string apiKey, string secret, IHttpClientFactory httpClientFactory = null)
+        public XCommasApi(string apiKey, string secret, IHttpClientFactory httpClientFactory = null, UserMode userMode = UserMode.Real)
         {
             this.ApiKey = apiKey;
             this.Secret = secret;
             this._httpClientFactory = httpClientFactory;
+            this.UserMode = userMode;
         }
 
         #region Deals
@@ -36,7 +42,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal[]>> GetDealsAsync(int limit = 50, int? offset = null, int? accountId = null, int? botId = null, DealScope dealScope = DealScope.All, DealOrder dealOrder = DealOrder.CreatedAt)
         {
             var path = $"{BaseAddress}/ver1/deals?limit={limit}&offset={offset}&account_id={accountId}&bot_id={botId}&scope={dealScope.GetEnumMemberAttrValue()}&order={dealOrder.GetEnumMemberAttrValue()}";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal[]>(request).ConfigureAwait(false);
             }
@@ -46,7 +52,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> UpdateMaxSafetyOrdersAsync(int dealId, int maxSafetyOrders)
         {
             var path = $"{BaseAddress}/ver1/deals/{dealId}/update_max_safety_orders";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new UpdateMaxSafetyOrderData { MaxSafetyOrders = maxSafetyOrders }).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new UpdateMaxSafetyOrderData { MaxSafetyOrders = maxSafetyOrders }).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -56,7 +62,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> PanicSellDealAsync(int dealId)
         {
             var path = $"{BaseAddress}/ver1/deals/{dealId}/panic_sell";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -66,7 +72,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> CancelDealAsync(int dealId)
         {
             var path = $"{BaseAddress}/ver1/deals/{dealId}/cancel";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -76,7 +82,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> ShowDealAsync(int dealId)
         {
             var path = $"{BaseAddress}/ver1/deals/{dealId}/show";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -86,7 +92,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> UpdateDealAsync(int dealId, DealUpdateData data)
         {
             var path = $"{BaseAddress}/ver1/deals/{dealId}/update_deal";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -96,7 +102,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Deal>> AddFundsToDealAsync(DealAddFundsParameters data)
         {
             var path = $"{BaseAddress}/ver1/deals/{data.DealId}/add_funds";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Deal>(request).ConfigureAwait(false);
             }
@@ -109,7 +115,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Account[]>> GetAccountsAsync()
         {
             var path = $"{BaseAddress}/ver1/accounts";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Account[]>(request).ConfigureAwait(false);
             }
@@ -139,7 +145,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<string>> CreateAccountAsync(AccountCreateData data)
         {
             var path = $"{BaseAddress}/ver1/accounts/new";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<string>(request).ConfigureAwait(false);
             }
@@ -159,7 +165,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<string>> SellAllToUsdAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/sell_all_to_usd";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<string>(request).ConfigureAwait(false);
             }
@@ -169,7 +175,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<string>> SellAllToBtcAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/sell_all_to_btc";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<string>(request).ConfigureAwait(false);
             }
@@ -179,7 +185,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Account>> LoadBalancesAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/load_balances";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Account>(request).ConfigureAwait(false);
             }
@@ -189,7 +195,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Account>> RenameAccountAsync(int accountId, string name)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/rename";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new RenameAccountData { NewName = name }).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new RenameAccountData { NewName = name }).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Account>(request).ConfigureAwait(false);
             }
@@ -199,7 +205,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<PieChartPiece[]>> GetPieChartDataAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/pie_chart_data";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<PieChartPiece[]>(request).ConfigureAwait(false);
             }
@@ -209,7 +215,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<AccountTableData[]>> GetAccountTableDataAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/account_table_data";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<AccountTableData[]>(request).ConfigureAwait(false);
             }
@@ -219,7 +225,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<string>> RemoveAccountAsync(int accountId)
         {
             var path = $"{BaseAddress}/ver1/accounts/{accountId}/remove";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<string>(request).ConfigureAwait(false);
             }
@@ -235,7 +241,7 @@ namespace XCommas.Net
             var path = $"{BaseAddress}/ver1/grid_bots?limit={limit}&offset={offset}&sort_by={sortBy}&sort_direction={sortDirection}";
             if (botState.HasValue) path += $"&state={botState.GetEnumMemberAttrValue()}";
 
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot[]>(request).ConfigureAwait(false);
             }
@@ -245,7 +251,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<GridBot>> CreateGridBotAsync(int accountId, GridBotData data)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/manual";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new GridBotCreateData(accountId, data)).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new GridBotCreateData(accountId, data)).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
             }
@@ -255,7 +261,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<GridBot>> UpdateGridBotAsync(int gridBotId, GridBotData data)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/manual";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(new GridBotUpdateData(gridBotId, data)).Sign(this))
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(new GridBotUpdateData(gridBotId, data)).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
             }
@@ -265,7 +271,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<GridBot>> DisableGridBotAsync(int gridBotId)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/disable";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
             }
@@ -275,7 +281,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<GridBot>> EnableGridBotAsync(int gridBotId)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/enable";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
             }
@@ -285,7 +291,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<bool>> DeleteGridBotAsync(int gridBotId)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/delete";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<bool>(request).ConfigureAwait(false);
             }
@@ -295,7 +301,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<GridBot>> ShowGridBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/grid_bots/{botId}";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
             }
@@ -309,7 +315,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<BotPairsBlackListData>> GetBotPairsBlackListAsync()
         {
             var path = $"{BaseAddress}/ver1/bots/pairs_black_list";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<BotPairsBlackListData>(request).ConfigureAwait(false);
             }
@@ -319,7 +325,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<bool>> SetBotPairsBlackListAsync(BotPairsBlackListData data)
         {
             var path = $"{BaseAddress}/ver1/bots/update_pairs_black_list";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<bool>(request).ConfigureAwait(false);
             }
@@ -329,7 +335,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> CreateBotAsync(int accountId, Strategy strategy, BotData data)
         {
             var path = $"{BaseAddress}/ver1/bots/create_bot";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new BotCreateData(accountId, strategy, data)).Sign(this))
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new BotCreateData(accountId, strategy, data)).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -342,7 +348,7 @@ namespace XCommas.Net
             if (botScope.HasValue) path += $"&scope={botScope.GetEnumMemberAttrValue()}";
             if (strategy.HasValue) path += $"&strategy={strategy.GetEnumMemberAttrValue()}";
 
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot[]>(request).ConfigureAwait(false);
             }
@@ -352,7 +358,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<BotStats>> GetBotStatsAsync()
         {
             var path = $"{BaseAddress}/ver1/bots/stats";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<BotStats>(request).ConfigureAwait(false);
             }
@@ -362,7 +368,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> UpdateBotAsync(int botId, BotUpdateData data)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/update";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -372,7 +378,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> DisableBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/disable";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -382,7 +388,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> EnableBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/enable";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -393,7 +399,7 @@ namespace XCommas.Net
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/start_new_deal";
             using (var request = XCommasRequest.Post(path)
-                .WithSerializedContent(new StartNewDealData { Pair = pair, SkipOpenDealsChecks = skipOpenDealsChecks, SkipSignalChecks = skipSignalChecks }).Sign(this))
+                .WithSerializedContent(new StartNewDealData { Pair = pair, SkipOpenDealsChecks = skipOpenDealsChecks, SkipSignalChecks = skipSignalChecks }).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -403,7 +409,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<bool>> DeleteBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/delete";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<bool>(request).ConfigureAwait(false);
             }
@@ -413,7 +419,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> PanicSellAllBotDealsAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/panic_sell_all_deals";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -423,7 +429,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> CancelAllBotDealsAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/cancel_all_deals";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -433,7 +439,7 @@ namespace XCommas.Net
         public async Task<XCommasResponse<Bot>> ShowBotAsync(int botId)
         {
             var path = $"{BaseAddress}/ver1/bots/{botId}/show";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<Bot>(request).ConfigureAwait(false);
             }
@@ -442,12 +448,12 @@ namespace XCommas.Net
         #endregion
 
         #region Marketplace
-        
+
         public XCommasResponse<MarketplaceItem[]> GetMarketplaceItems(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All) => this.GetMarketplaceItemsAsync(limit, offset, scope).Result;
         public async Task<XCommasResponse<MarketplaceItem[]>> GetMarketplaceItemsAsync(int limit = 50, int? offset = null, SignalProviders scope = SignalProviders.All)
         {
             var path = $"{BaseAddress}/ver1/marketplace/items?limit={limit}&offset={offset}&scope={scope.GetEnumMemberAttrValue()}";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<MarketplaceItem[]>(request).ConfigureAwait(false);
             }
@@ -457,144 +463,124 @@ namespace XCommas.Net
 
         #region Smart trades
 
-        public XCommasResponse<SmartTrade> CreateSimpleSell(SimpleTradeData data) => this.CreateSimpleSellAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSimpleSellAsync(SimpleTradeData data)
+        private static string BuildQueryString(Dictionary<string, string> param)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_simple_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            var qStringBuilder = new StringBuilder();
+
+            if (param != null && param.Count > 0)
             {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+                qStringBuilder.Append("?");
+                foreach (var p in param)
+                {
+                    qStringBuilder.Append($"{Uri.EscapeDataString(p.Key)}={Uri.EscapeDataString(p.Value)}&");
+                }
+                qStringBuilder.Length--;
+            }
+            return qStringBuilder.ToString();
+        }
+
+        private void AddIfHasValue(Dictionary<string, string> dict, string key, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value) && !dict.ContainsKey(key))
+            {
+                dict.Add(key, value);
             }
         }
 
-        public XCommasResponse<SmartTrade> CreateSimpleBuy(SimpleTradeData data) => this.CreateSimpleBuyAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSimpleBuyAsync(SimpleTradeData data)
+        public XCommasResponse<SmartTrade[]> GetSmartTrades(int? accountId = null, string pair = null, SmartTradeType? type = null, SmartTradeStatus? status = null, OrderBy? orderBy = null, OrderDirection? orderDirection = null, int? page = null, int? perPage = null) => this.GetSmartTradesAsync(accountId, pair, type, status, orderBy, orderDirection, page, perPage).Result;
+        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int? accountId = null, string pair = null, SmartTradeType? type = null, SmartTradeStatus? status = null, OrderBy? orderBy = null, OrderDirection? orderDirection = null, int? page = null, int? perPage = null)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_simple_buy";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
+            var param = new Dictionary<string, string>();
+            if (accountId.HasValue)
             {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+                param.Add("accountId", accountId.Value.ToString());
             }
-        }
+            AddIfHasValue(param, "pair", pair);
+            AddIfHasValue(param, "type", type?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "status", status?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "order_by", orderBy?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "order_direction", orderDirection?.GetEnumMemberAttrValue());
+            AddIfHasValue(param, "page", page.ToString());
+            AddIfHasValue(param, "per_page", perPage.ToString());
 
-        public XCommasResponse<SmartTrade> CreateSmartSell(SmartSellCreateParameters data) => this.CreateSmartSellAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartSellAsync(SmartSellCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
+            var qString = BuildQueryString(param);
+            var path = $"{BaseAddress}/v2/smart_trades{qString}";
 
-        public XCommasResponse<SmartTrade> CreateSmartCover(SmartCoverCreateParameters data) => this.CreateSmartCoverAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartCoverAsync(SmartCoverCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_cover";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> CreateSmartTrade(SmartTradeCreateParameters data) => this.CreateSmartTradeAsync(data).Result;
-        public async Task<XCommasResponse<SmartTrade>> CreateSmartTradeAsync(SmartTradeCreateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/create_smart_trade";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade[]> GetSmartTrades(int limit = 50, int? offset = null, int? accountId = null, SmartTradeScope smartTradeScope = SmartTradeScope.All, string type = null) => this.GetSmartTradesAsync(limit, offset, accountId, smartTradeScope, type).Result;
-        public async Task<XCommasResponse<SmartTrade[]>> GetSmartTradesAsync(int limit = 50, int? offset = null, int? accountId = null, SmartTradeScope smartTradeScope = SmartTradeScope.All, string type = null)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades?limit={limit}&offset={offset}&account_id={accountId}&scope={smartTradeScope.GetEnumMemberAttrValue()}&type={type}";
-            using (var request = XCommasRequest.Get(path).Sign(this))
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade[]>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<Deal> PanicSellSmartTradeStep(int smartTradeId, int stepId) => this.PanicSellSmartTradeStepAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<Deal>> PanicSellSmartTradeStepAsync(int smartTradeId, int stepId)
+        public XCommasResponse<SmartTrade> CreateSmartTrade(SmartTradeCreateRequest request) => this.CreateSmartTradeAsync(request).Result;
+        public async Task<XCommasResponse<SmartTrade>> CreateSmartTradeAsync(SmartTradeCreateRequest createRequest)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/step_panic_sell";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(new PanicSellSmartTradeStepData { StepId = stepId }).Sign(this))
-            {
-                return await this.GetResponse<Deal>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> UpdateSmartTrade(int smartTradeId, SmartTradeUpdateParameters data) => this.UpdateSmartTradeAsync(smartTradeId, data).Result;
-        public async Task<XCommasResponse<SmartTrade>> UpdateSmartTradeAsync(int smartTradeId, SmartTradeUpdateParameters data)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/update";
-            using (var request = XCommasRequest.Patch(path).WithSerializedContent(data).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(createRequest).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> CancelSmartTrade(int smartTradeId) => this.CancelSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> UpdateSmartTrade(int id, SmartTradeCreateRequest request) => this.UpdateSmartTradeAsync(id, request).Result;
+        public async Task<XCommasResponse<SmartTrade>> UpdateSmartTradeAsync(int id, SmartTradeCreateRequest createRequest)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(createRequest).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> PanicSellSmartTrade(int smartTradeId) => this.PanicSellSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> PanicSellSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> GetSmartTrade(int id) => this.GetSmartTradeAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> GetSmartTradeAsync(int id)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/panic_sell";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Get(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTrade> RefreshSmartTrade(int smartTradeId) => this.RefreshSmartTradeAsync(smartTradeId).Result;
-        public async Task<XCommasResponse<SmartTrade>> RefreshSmartTradeAsync(int smartTradeId)
+        public XCommasResponse<SmartTrade> CancelSmartTrade(int id) => this.CancelSmartTradeAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeAsync(int id)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/force_process";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}";
+            using (var request = XCommasRequest.Delete(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
 
-        public XCommasResponse<SmartTradeStep> AddFundsToSmartTrade(SmartTradeAddFundsParameters data) => this.AddFundsToSmartTradeAsync(data).Result;
-        public async Task<XCommasResponse<SmartTradeStep>> AddFundsToSmartTradeAsync(SmartTradeAddFundsParameters data)
+        public XCommasResponse<SmartTrade> CloseSmartTradeByMarket(int id) => this.CloseSmartTradeByMarketAsync(id).Result;
+        public async Task<XCommasResponse<SmartTrade>> CloseSmartTradeByMarketAsync(int id)
         {
-            var path = $"{BaseAddress}/ver1/smart_trades/{data.SmartTradeId}/add_funds";
-            using (var request = XCommasRequest.Post(path).WithSerializedContent(data).Sign(this))
-            {
-                return await this.GetResponse<SmartTradeStep>(request).ConfigureAwait(false);
-            }
-        }
-
-        public XCommasResponse<SmartTrade> CancelSmartTradeOrder(int smartTradeId, int stepId) => this.CancelSmartTradeOrderAsync(smartTradeId, stepId).Result;
-        public async Task<XCommasResponse<SmartTrade>> CancelSmartTradeOrderAsync(int smartTradeId, int stepId)
-        {
-            var path = $"{BaseAddress}/ver1/smart_trades/{smartTradeId}/cancel_order?step_id={stepId}";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            var path = $"{BaseAddress}/v2/smart_trades/{id}/close_by_market";
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
             }
         }
+
+        public XCommasResponse<SmartTrade> AddFundsToSmartTrade(int id, AddFundsToSmartTradeParams param) => this.AddFundsToSmartTradeAsync(id, param).Result;
+        public async Task<XCommasResponse<SmartTrade>> AddFundsToSmartTradeAsync(int id, AddFundsToSmartTradeParams param)
+        {
+            var path = $"{BaseAddress}/v2/smart_trades/{id}/add_funds";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(param).Force(UserMode).Sign(this))
+            {
+                return await this.GetResponse<SmartTrade>(request).ConfigureAwait(false);
+            }
+        }
+
         #endregion
-        
+
         #region users
 
         public XCommasResponse<bool> ChangeUserMode(UserMode userMode) => this.ChangeUserModeAsync(userMode).Result;
         public async Task<XCommasResponse<bool>> ChangeUserModeAsync(UserMode userMode)
         {
             var path = $"{BaseAddress}/ver1/users/change_mode?mode={userMode.GetEnumMemberAttrValue()}";
-            using (var request = XCommasRequest.Post(path).Sign(this))
+            using (var request = XCommasRequest.Post(path).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<bool>(request).ConfigureAwait(false);
             }
@@ -665,7 +651,7 @@ namespace XCommas.Net
                 var httpClient = _httpClientFactory == null ? HttpClientSingleton : _httpClientFactory.CreateClient();
                 var response = await httpClient.SendAsync(request.request);
                 var content = await response.Content.ReadAsStringAsync();
-                
+
                 return new XCommasResponse<string>(content, null, null);
             }
             catch (Exception ex)
