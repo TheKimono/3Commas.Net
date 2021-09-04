@@ -13,7 +13,8 @@ namespace XCommas.Net
         private readonly JsonSerializer DefaultSerializer = JsonSerializer.Create(new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            FloatFormatHandling = FloatFormatHandling.DefaultValue
         });
 
         private HttpClient HttpClientSingleton => _httpClientSingleton ?? (_httpClientSingleton = new HttpClient());
