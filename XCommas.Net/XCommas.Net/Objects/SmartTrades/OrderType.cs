@@ -8,5 +8,7 @@ namespace XCommas.Net.Objects.SmartTrades
         Market,
         [EnumMember(Value = "limit")]
         Limit
+        [EnumMember(Value = "conditional")]
+        Conditional
     }
 }
