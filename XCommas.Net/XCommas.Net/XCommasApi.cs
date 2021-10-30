@@ -18,7 +18,8 @@ namespace XCommas.Net
         {
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore,
-            FloatFormatHandling = FloatFormatHandling.DefaultValue
+            FloatFormatHandling = FloatFormatHandling.DefaultValue,
+            FloatParseHandling = FloatParseHandling.Decimal
         });
 
         private HttpClient HttpClientSingleton => _httpClientSingleton ?? (_httpClientSingleton = new HttpClient());
