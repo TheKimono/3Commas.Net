@@ -81,6 +81,8 @@ namespace XCommas.Net.Objects
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("base_order_volume_type")]
         public VolumeType BaseOrderVolumeType { get; set; }
+        [JsonProperty("base_order_average_price")]
+        public decimal BaseOrderAveragePrice { get; set; }
         [JsonProperty("from_currency")]
         public string FromCurrency { get; set; }
         [JsonProperty("to_currency")]
