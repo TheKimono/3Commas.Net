@@ -18,8 +18,6 @@ namespace XCommas.Net.Objects
         public DateTime CreatedAt { get; set; }
         [JsonProperty("updated_at")]
         public DateTime UpdatedAt { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
         [JsonProperty("start_price")]
         public decimal StartPrice { get; set; }
         [JsonProperty("grid_price_step")]
@@ -68,6 +66,7 @@ namespace XCommas.Net.Objects
         public GridBotUpdateData(int id, GridBotData data)
         {
             Id = id;
+            Name = data.Name;
             QuantityPerGrid = data.QuantityPerGrid;
             GridsQuantity = data.GridsQuantity;
             LowerLimitPrice = data.LowerLimitPrice;
@@ -83,6 +82,8 @@ namespace XCommas.Net.Objects
 
     public class GridBotData
     {
+        [JsonProperty("name")]
+        public string Name { get; set; }
         [JsonProperty("pair")]
         public string Pair { get; set; }
         [JsonProperty("upper_price")]
