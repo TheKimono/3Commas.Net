@@ -78,6 +78,33 @@ namespace XCommas.Net.Objects
         }
     }
 
+    public class BbOptions
+    {
+        public BbOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, decimal points = 0)
+        {
+            this.Time = time;
+            this.Points = points;
+        }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("time")]
+        public IndicatorTime Time { get; set; }
+        private decimal points;
+        [JsonProperty("points")]
+        public decimal Points
+        {
+            get
+            {
+                return this.points;
+            }
+            set
+            {
+                if (value < -1 || value > 2) throw new Exception("Value must be between -1.0 and 2.0");
+                this.points = value;
+            }
+        }
+    }
+
     public class UltOptions
     {
         public UltOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, int points = 40)
