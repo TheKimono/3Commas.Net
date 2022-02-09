@@ -73,6 +73,10 @@ namespace XCommas.Net.Objects
         public decimal? FinalProfit { get; set; }
         [JsonProperty("martingale_coefficient")]
         public decimal MartingaleCoefficient { get; set; }
+        [JsonProperty("martingale_volume_coefficient")]
+        public decimal MartingaleVolumeCoefficient { get; set; }
+        [JsonProperty("martingale_step_coefficient")]
+        public decimal MartingaleStepCoefficient { get; set; }
         [JsonProperty("error_message")]
         public string ErrorMessage { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
