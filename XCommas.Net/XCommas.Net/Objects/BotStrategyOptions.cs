@@ -57,10 +57,6 @@ namespace XCommas.Net.Objects
         {
             this.Time = time;
             this.Points = points;
-            if (timePeriod == 0)
-            {
-                timePeriod = 14;
-            }
             this.TimePeriod = timePeriod;
             this.Condition = triggerCondition;
         }
