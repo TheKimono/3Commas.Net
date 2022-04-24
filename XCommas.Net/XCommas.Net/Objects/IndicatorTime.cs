@@ -18,5 +18,13 @@ namespace XCommas.Net.Objects
         TwoHours,
         [EnumMember(Value = "4h")]
         FourHours,
+        [EnumMember(Value = "8h")]
+        EightHours,
+        [EnumMember(Value = "1d")]
+        OneDay,
+        [EnumMember(Value = "3d")]
+        ThreeDays,
+        [EnumMember(Value = "1w")]
+        OneWeek
     }
 }
