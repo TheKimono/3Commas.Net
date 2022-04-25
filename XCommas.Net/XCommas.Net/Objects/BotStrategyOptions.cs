@@ -53,15 +53,18 @@ namespace XCommas.Net.Objects
 
     public class RsiOptions
     {
-        public RsiOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, int points = 25)
+        public RsiOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, int points = 25, int timePeriod = 14, TriggerCondition triggerCondition = TriggerCondition.Less)
         {
             this.Time = time;
             this.Points = points;
+            this.TimePeriod = timePeriod;
+            this.Condition = triggerCondition;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("time")]
         public IndicatorTime Time { get; set; }
+
         private int points;
         [JsonProperty("points")]
         public int Points
@@ -76,6 +79,25 @@ namespace XCommas.Net.Objects
                 this.points = value;
             }
         }
+
+        private int timePeriod;
+        [JsonProperty("time_period")]
+        public int TimePeriod
+        {
+            get
+            {
+                return this.timePeriod;
+            }
+            set
+            {
+                if (value < 1 || value > 30) throw new Exception("Value must be between 1 and 30");
+                this.timePeriod = value;
+            }
+        }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("trigger_condition")]
+        public TriggerCondition Condition { get; set; }
     }
 
     public class BbOptions
