@@ -53,8 +53,12 @@ namespace XCommas.Net.Objects
 
     public class RsiOptions
     {
-        public RsiOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, int points = 25, int timePeriod = 14, TriggerCondition triggerCondition = TriggerCondition.Less)
+        public RsiOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, int points = 25, int timePeriod = 7, TriggerCondition triggerCondition = TriggerCondition.Less)
         {
+            // If no value is present, it falls back to the default legacy RSI time period value (7).
+            // https://github.com/TheKimono/3Commas.Net/issues/56
+            if (timePeriod == 0) timePeriod = 7;
+
             this.Time = time;
             this.Points = points;
             this.TimePeriod = timePeriod;
