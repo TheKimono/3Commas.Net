@@ -13,6 +13,7 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "Parabolic-SAR")] Parabolic_SAR,
         [EnumMember(Value = "SMA-20-50")] SMA_20_50,
         [EnumMember(Value = "SMA-50-100")] SMA_50_100,
+        [EnumMember(Value = "SMA-50-200")] SMA_50_200,
         [EnumMember(Value = "SMA-100-200")] SMA_100_200,
         [EnumMember(Value = "BB-20-1-UB")] BB_20_1_UB,
         [EnumMember(Value = "BB-20-2-UB")] BB_20_2_UB,
