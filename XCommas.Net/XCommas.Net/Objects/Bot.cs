@@ -41,6 +41,7 @@ namespace XCommas.Net.Objects
     {
         public BotUpdateData(Bot data)
         {
+            this.AllowedDealsOnSamePair = data.AllowedDealsOnSamePair;
             this.ActiveSafetyOrdersCount = data.ActiveSafetyOrdersCount;
             this.BaseOrderVolume = data.BaseOrderVolume;
             this.BaseOrderVolumeType = data.BaseOrderVolumeType;
@@ -122,6 +123,8 @@ namespace XCommas.Net.Objects
 
     public class BotData
     {
+        [JsonProperty("allowed_deals_on_same_pair")]
+        public int? AllowedDealsOnSamePair { get; set; }
         [JsonProperty("max_safety_orders")]
         public int MaxSafetyOrders { get; set; }
         [JsonProperty("pairs")]
