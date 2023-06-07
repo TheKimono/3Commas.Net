@@ -18,7 +18,9 @@ namespace XCommas.Net.Converters
             this.strategyMapping.Add(TaPresetsBotStrategy.Id, typeof(TaPresetsBotStrategy));
             this.strategyMapping.Add(TradingViewBotStrategy.Id, typeof(TradingViewBotStrategy));
             this.strategyMapping.Add(RsiBotStrategy.Id, typeof(RsiBotStrategy));
-            this.strategyMapping.Add(BbBotStrategy.Id, typeof(BbBotStrategy));
+            this.strategyMapping.Add(Rsi14BotStrategy.Id, typeof(Rsi14BotStrategy));
+            this.strategyMapping.Add(Bb201BotStrategy.Id, typeof(Bb201BotStrategy));
+            this.strategyMapping.Add(Bb202BotStrategy.Id, typeof(Bb202BotStrategy));
             this.strategyMapping.Add(UltBotStrategy.Id, typeof(UltBotStrategy));
             this.strategyMapping.Add(CqsPremiumBotStrategy.Id, typeof(CqsPremiumBotStrategy));
             this.strategyMapping.Add(ManualStrategy.Id, typeof(ManualStrategy));

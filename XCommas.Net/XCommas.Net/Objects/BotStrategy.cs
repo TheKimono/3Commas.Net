@@ -105,6 +105,17 @@ namespace XCommas.Net.Objects
         [JsonProperty("options")]
         public RsiOptions Options { get; set; }
     }
+    public class Rsi14BotStrategy : BotStrategy
+    {
+        public const string Id = "rsi14";
+        public Rsi14BotStrategy() : base(Id)
+        {
+
+        }
+
+        [JsonProperty("options")]
+        public RsiOptions Options { get; set; }
+    }
 
     public class UltBotStrategy : BotStrategy
     {
@@ -118,10 +129,22 @@ namespace XCommas.Net.Objects
         public UltOptions Options { get; set; }
     }
 
-    public class BbBotStrategy : BotStrategy
+    public class Bb201BotStrategy : BotStrategy
     {
-        public const string Id = "b_bands_percent";
-        public BbBotStrategy() : base(Id)
+        public const string Id = "b_bands_percent1";
+        public Bb201BotStrategy() : base(Id)
+        {
+
+        }
+
+        [JsonProperty("options")]
+        public BbOptions Options { get; set; }
+    }
+
+    public class Bb202BotStrategy : BotStrategy
+    {
+        public const string Id = "b_bands_percent2";
+        public Bb202BotStrategy() : base(Id)
         {
 
         }
