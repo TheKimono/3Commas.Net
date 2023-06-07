@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using Newtonsoft.Json.Converters;
+using System.Xml.Linq;
 
 namespace XCommas.Net.Objects
 {
     public class GridBot : GridBotData
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [JsonProperty("account_id")]
         public int AccountId { get; set; }
         [JsonProperty("account_name")]
@@ -59,6 +60,24 @@ namespace XCommas.Net.Objects
         public LeverageType? LeverageType { get; set; }
         [JsonProperty("leverage_custom_value")]
         public decimal? LeverageCustomValue { get; set; }
+        [JsonProperty("max_active_buy_lines")]
+        public int? MaxActiveBuyLines { get; set; }
+        [JsonProperty("max_active_sell_lines")]
+        public int? MaxActiveSellLines { get; set; }
+        [JsonProperty("upper_stop_loss_price")]
+        public decimal? UpperStopLossPrice { get; set; }
+        [JsonProperty("upper_stop_loss_enabled")]
+        public bool? UpperStopLossEnabled { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("upper_stop_loss_action")]
+        public UpperStopLossActionType? UpperStopLossAction { get; set; }
+        [JsonProperty("lower_stop_loss_price")]
+        public decimal? LowerStopLossPrice { get; set; }
+        [JsonProperty("lower_stop_loss_enabled")]
+        public bool? LowerStopLossEnabled { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("lower_stop_loss_action")]
+        public LowerStopLossActionType? LowerStopLossAction { get; set; }
     }
 
     public class GridBotCreateData : GridBotData
@@ -72,6 +91,12 @@ namespace XCommas.Net.Objects
             UpperLimitPrice = data.UpperLimitPrice;
             LeverageCustomValue = data.LeverageCustomValue;
             LeverageType = data.LeverageType;
+            UpperStopLossEnabled = data.UpperStopLossEnabled;
+            UpperStopLossAction = data.UpperStopLossAction;
+            UpperStopLossPrice = data.UpperStopLossPrice;
+            LowerStopLossEnabled = data.LowerStopLossEnabled;
+            LowerStopLossAction = data.LowerStopLossAction;
+            LowerStopLossPrice = data.LowerStopLossPrice;
             Pair = data.Pair;
         }
 
@@ -84,7 +109,7 @@ namespace XCommas.Net.Objects
 
     public class GridBotUpdateData : GridBotData
     {
-        public GridBotUpdateData(int id, GridBotData data)
+        public GridBotUpdateData(long id, GridBotData data)
         {
             Id = id;
             Name = data.Name;
@@ -94,11 +119,19 @@ namespace XCommas.Net.Objects
             UpperLimitPrice = data.UpperLimitPrice;
             LeverageCustomValue = data.LeverageCustomValue;
             LeverageType = data.LeverageType;
+            UpperStopLossEnabled = data.UpperStopLossEnabled;
+            UpperStopLossAction = data.UpperStopLossAction;
+            UpperStopLossPrice = data.UpperStopLossPrice;
+            LowerStopLossEnabled = data.LowerStopLossEnabled;
+            LowerStopLossAction = data.LowerStopLossAction;
+            LowerStopLossPrice = data.LowerStopLossPrice;
+            MaxActiveBuyLines = data.MaxActiveBuyLines;
+            MaxActiveSellLines = data.MaxActiveSellLines;
             Pair = data.Pair;
         }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
     
     public class AIGridBot : GridBotData
@@ -151,7 +184,7 @@ namespace XCommas.Net.Objects
         [JsonProperty("leverage_custom_value")]
         public decimal? LeverageCustomValue { get; set; }
     }
-    
+
     public class AIGridBotCreateData : AIGridBotData
     {
         public AIGridBotCreateData(int accountId, AIGridBotData data)
@@ -169,10 +202,10 @@ namespace XCommas.Net.Objects
         [JsonProperty("is_enabled")]
         public bool? IsEnabled { get; set; }
     }
-    
+
     public class AIGridBotUpdateData : AIGridBotData
     {
-        public AIGridBotUpdateData(int id, AIGridBotData data)
+        public AIGridBotUpdateData(long id, AIGridBotData data)
         {
             Id = id;
             Name = data.Name;
@@ -183,6 +216,6 @@ namespace XCommas.Net.Objects
         }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace XCommas.Net.Objects.SmartTrades
     public class SmartTrade
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [JsonProperty("version")]
         public int Version { get; set; }
         [JsonProperty("account")]

@@ -4,13 +4,13 @@ namespace XCommas.Net.Objects
 {
     public class DealUpdateData
     {
-        public DealUpdateData(int dealId)
+        public DealUpdateData(long dealId)
         {
             DealId = dealId;
         }
 
         [JsonProperty("deal_id")]
-        public int DealId { get; set; }
+        public long DealId { get; set; }
         [JsonProperty("take_profit")]
         public decimal? TakeProfit { get; set; }
         [JsonProperty("profit_currency")]

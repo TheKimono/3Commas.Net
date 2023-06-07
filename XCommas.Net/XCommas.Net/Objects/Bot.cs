@@ -9,8 +9,8 @@ namespace XCommas.Net.Objects
     public class Bot : BotData
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("active_deals_count")]
+        public long Id { get; set; }
+        [JsonProperty("active_deals_count")] 
         public int ActiveDealsCount { get; set; }
         [JsonProperty("deletable?")]
         public bool IsDeleteable { get; set; }

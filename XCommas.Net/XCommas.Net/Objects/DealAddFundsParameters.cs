@@ -11,7 +11,7 @@ namespace XCommas.Net.Objects
         [JsonProperty("rate")]
         public decimal? Rate { get; set; }
         [JsonProperty("deal_id")]
-        public int DealId { get; set; }
+        public long DealId { get; set; }
         [JsonProperty("response_type")]
         public string ResponseType { get; set; } = "deal";
     }
