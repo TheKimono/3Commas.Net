@@ -11,6 +11,6 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "isolated")]
         Isolated,
         [EnumMember(Value = "custom")]
-        Custom,
+        Custom
     }
 }

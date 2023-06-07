@@ -27,6 +27,16 @@ namespace XCommas.Net
             return this;
         }
 
+        public XCommasRequest AddEnterpriseAppId(string appId)
+        {
+            if (!string.IsNullOrWhiteSpace(appId))
+            {
+                this.request.Headers.Add("commas-app-id", appId);
+            }
+
+            return this;
+        }
+
         public XCommasRequest Force(UserMode userMode)
         {
             var userModeStr = userMode == UserMode.Paper

@@ -8,7 +8,7 @@ namespace XCommas.Net.Objects
     public class Deal
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [JsonProperty("type")]
         public string DealType { get; set; }
         [JsonProperty("bot_id")]
@@ -60,6 +60,8 @@ namespace XCommas.Net.Objects
         public decimal BoughtVolume { get; set; }
         [JsonProperty("bought_average_price")]
         public decimal BoughtAveragePrice { get; set; }
+        [JsonProperty("base_order_average_price")]
+        public decimal BaseOrderAveragePrice { get; set; }
         [JsonProperty("sold_amount")]
         public decimal SoldAmount { get; set; }
         [JsonProperty("sold_volume")]
@@ -73,10 +75,6 @@ namespace XCommas.Net.Objects
         public decimal? FinalProfit { get; set; }
         [JsonProperty("martingale_coefficient")]
         public decimal MartingaleCoefficient { get; set; }
-        [JsonProperty("martingale_volume_coefficient")]
-        public decimal MartingaleVolumeCoefficient { get; set; }
-        [JsonProperty("martingale_step_coefficient")]
-        public decimal MartingaleStepCoefficient { get; set; }
         [JsonProperty("error_message")]
         public string ErrorMessage { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
@@ -85,8 +83,6 @@ namespace XCommas.Net.Objects
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("base_order_volume_type")]
         public VolumeType BaseOrderVolumeType { get; set; }
-        [JsonProperty("base_order_average_price")]
-        public decimal BaseOrderAveragePrice { get; set; }
         [JsonProperty("from_currency")]
         public string FromCurrency { get; set; }
         [JsonProperty("to_currency")]

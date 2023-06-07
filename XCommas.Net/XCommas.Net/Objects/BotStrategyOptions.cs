@@ -106,10 +106,13 @@ namespace XCommas.Net.Objects
 
     public class BbOptions
     {
-        public BbOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, decimal points = 0)
+        public BbOptions(IndicatorTime time = IndicatorTime.ThreeMinutes, decimal points = 0, string deviation = "2", string timePeriod = "20", TriggerCondition triggerCondition = TriggerCondition.Less)
         {
             this.Time = time;
             this.Points = points;
+            this.Deviation = deviation;
+            this.TimePeriod = timePeriod;
+            this.Condition = triggerCondition;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -129,6 +132,40 @@ namespace XCommas.Net.Objects
                 this.points = value;
             }
         }
+
+        private string deviation;
+        [JsonProperty("deviation")]
+        public string Deviation
+        {
+            get
+            {
+                return this.deviation;
+            }
+            set
+            {
+                if (value != "1" && value != "2") throw new Exception("Value must be 1 or 2");
+                this.deviation = value;
+            }
+        }
+
+        private string timePeriod;
+        [JsonProperty("time_period")]
+        public string TimePeriod
+        {
+            get
+            {
+                return this.timePeriod;
+            }
+            set
+            {
+                if (value != "10" && value != "20" && value != "30" && value != "40" && value != "50") throw new Exception("Value must be 10, 20, 30, 40 or 50");
+                this.timePeriod = value;
+            }
+        }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("trigger_condition")]
+        public TriggerCondition Condition { get; set; }
     }
 
     public class UltOptions

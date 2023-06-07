@@ -41,6 +41,8 @@ namespace XCommas.Net.Objects
         [EnumMember(Value = "ttp_order_placed")]
         TtpOrderPlaced,
         [EnumMember(Value = "liquidated")]
-        Liquidated
+        Liquidated,
+        [EnumMember(Value = "close_strategy_activated")]
+        CloseStrategyActivated
     }
 }
