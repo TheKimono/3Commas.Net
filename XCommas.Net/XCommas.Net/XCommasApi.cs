@@ -259,6 +259,16 @@ namespace XCommas.Net
             }
         }
 
+        public XCommasResponse<AIGridBot> CreateAIGridBot(int accountId, AIGridBotData data) => this.CreateAIGridBotAsync(accountId, data).Result;
+        public async Task<XCommasResponse<AIGridBot>> CreateAIGridBotAsync(int accountId, AIGridBotData data)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/ai";
+            using (var request = XCommasRequest.Post(path).WithSerializedContent(new AIGridBotCreateData(accountId, data)).Force(UserMode).Sign(this))
+            {
+                return await this.GetResponse<AIGridBot>(request).ConfigureAwait(false);
+            }
+        }
+
         public XCommasResponse<GridBot> UpdateGridBot(int gridBotId, GridBotData data) => this.UpdateGridBotAsync(gridBotId, data).Result;
         public async Task<XCommasResponse<GridBot>> UpdateGridBotAsync(int gridBotId, GridBotData data)
         {
@@ -266,6 +276,16 @@ namespace XCommas.Net
             using (var request = XCommasRequest.Patch(path).WithSerializedContent(new GridBotUpdateData(gridBotId, data)).Force(UserMode).Sign(this))
             {
                 return await this.GetResponse<GridBot>(request).ConfigureAwait(false);
+            }
+        }
+
+        public XCommasResponse<AIGridBot> UpdateAIGridBot(int gridBotId, AIGridBotData data) => this.UpdateAIGridBotAsync(gridBotId, data).Result;
+        public async Task<XCommasResponse<AIGridBot>> UpdateAIGridBotAsync(int gridBotId, AIGridBotData data)
+        {
+            var path = $"{BaseAddress}/ver1/grid_bots/{gridBotId}/ai";
+            using (var request = XCommasRequest.Patch(path).WithSerializedContent(new AIGridBotUpdateData(gridBotId, data)).Force(UserMode).Sign(this))
+            {
+                return await this.GetResponse<AIGridBot>(request).ConfigureAwait(false);
             }
         }
 
