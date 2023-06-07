@@ -7,6 +7,8 @@ namespace XCommas.Net.Objects.SmartTrades
     {
         [JsonProperty("enabled")]
         public bool Enabled { get; set; }
+        [JsonProperty("breakeven")]
+        public bool Breakeven { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("order_type")]
         public OrderType OrderType { get; set; }
